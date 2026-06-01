@@ -52,7 +52,7 @@ grep -rh "DatabaseService" --include="*.ets" entry/src/main/ets/services/ 2>/dev
 grep -rh "PhotoPickerDialog\|RawFileToSandbox\|testNapi" --include="*.ets" entry/src/main/ets/pages/ 2>/dev/null
 ```
 
-## 变异点检测命令
+## 差异点检测命令
 
 ```bash
 # 1. 列出所有页面（识别有多少个同级的页面模块）

@@ -1,0 +1,47 @@
+name: Documentation Improvement
+description: Improve documentation (README, SKILL.md, examples, etc.)
+title: "[Docs] "
+labels: ["documentation"]
+body:
+  - type: dropdown
+    id: doc-file
+    attributes:
+      label: File
+      options:
+        - README.md
+        - SKILL.md
+        - CONTRIBUTING.md
+        - CHANGELOG.md
+        - phases/*.md
+        - types/*.md
+        - templates/*.md
+        - examples/*.md
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: doc-type
+    attributes:
+      label: Type of Improvement
+      options:
+        - Typo / grammar
+        - Inaccurate content
+        - Missing content
+        - Translation
+        - Add example
+        - Restructure
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Suggested Change

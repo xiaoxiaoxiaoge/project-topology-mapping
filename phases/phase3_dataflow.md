@@ -1,19 +1,22 @@
 # 阶段 3: 数据流分析 + 前后端定位速查
 
-**⚠️ 重要：阶段 2 的变异点预检结果决定了阶段 3 的采样策略。**
+**⚠️ 重要：阶段 2 的差异点预检结果决定了阶段 3 的采样策略。**
 
-- 如果阶段 2 发现"无变异" → 阶段 3 只采样 1 个代表性页面/类
-- 如果阶段 2 发现"极度变异" → 阶段 3 必须逐个分析所有子模块/控制器
+- 如果阶段 2 发现"无差异点" → 阶段 3 只采样 1 个代表性页面/类
+- 如果阶段 2 发现"极度差异点" → 阶段 3 必须逐个分析所有子模块/控制器
 
 **⚠️ 这是最容易被跳过的部分，也是最重要的改进点。**
 
 **⚠️ 全栈项目必须生成"前后端定位速查表"，用于快速定位功能修改位置。**
 
+> 前置：阶段 1-2 已完成。
+> 后置：进入 [阶段 4: 生成拓扑文件](./phase4_output.md)
+
 ---
 
-## ⚠️ 用户确认：定位速查表详细程度
+## 3.0 用户确认：定位速查表详细程度
 
-**在生成定位速查表之前，必须询问用户：**
+**在生成定位速查表之前，必须询问用户**（如果阶段 1 还没问）：
 
 > **定位速查表需要生成哪种版本？**
 >
@@ -30,95 +33,124 @@
 
 ---
 
-## 3.1 HTTP 请求层分析（Agent 6）
+## 3.1 HTTP 请求层分析
 
-### 前端项目
+### 前端 / 移动端 / 小程序 / 桌面端
+
 ```bash
-cat src/utils/request.ts 2>/dev/null || cat src/utils/api.ts 2>/dev/null
+# 通用：找 HTTP 工具
+git ls-files 'src/utils/request.*' 'src/api/request.*' 'src/http/*' 'utils/request.*' 2>/dev/null
+git ls-files 'lib/core/http.*' 'lib/http/*' 2>/dev/null
+
+# 小程序
+git ls-files 'utils/request.*' 'api/request.*' 2>/dev/null
+
+# Electron
+git ls-files 'main/*/http*' 'main/*/api*' 2>/dev/null
 ```
 
-### 后端项目
-```bash
-# 检查 HTTP 客户端配置（RestTemplate, WebClient, OkHttp 等）
-grep -rh "RestTemplate\|WebClient\|OkHttp\|HttpClient" src/ 2>/dev/null | head -20
+### 后端
 
-# 检查过滤器/拦截器
-find src -type f -name "*Filter.java" 2>/dev/null | head -10
-find src -type f -name "*Interceptor.java" 2>/dev/null | head -10
+```bash
+# HTTP 客户端（RestTemplate / WebClient / OkHttp / HttpClient / axios / reqwest）
+git grep -h "RestTemplate\|WebClient\|OkHttp\|HttpClient" -- '*.java' 2>/dev/null | head -20
+git grep -h "axios\|got\|undici" -- '*.ts' '*.js' 2>/dev/null | head -20
+git grep -h "reqwest::" -- '*.rs' 2>/dev/null | head -20
+
+# 过滤器 / 拦截器
+git ls-files 'src/**/*Filter.*' 'src/**/*Interceptor.*' 2>/dev/null
 ```
 
-**重点提取：**
-- 请求拦截器（如何添加 token、tenantId / Authorization）
+### 重点提取
+
+- 请求拦截器（如何添加 token、tenantId、Authorization）
 - 响应拦截器（错误处理、token 刷新）
 - 通用数据流图
 
 ---
 
-## 3.2 状态管理层分析（Agent 7）
+## 3.2 状态管理层分析
 
-### 前端项目
+### 前端 / 移动端 / 小程序 / 桌面端
+
 ```bash
-cat src/store/*.ts
+# 找状态管理文件
+git ls-files 'src/store/*' 'src/stores/*' 'src/redux/*' 'src/zustand/*' 'src/pinia/*' 2>/dev/null
+git ls-files 'lib/stores/*' 'lib/blocs/*' 'lib/providers/*' 2>/dev/null
+git ls-files 'miniprogram/store/*' 2>/dev/null
+git ls-files 'src/renderer/store/*' 2>/dev/null
+
+# 跨平台状态管理
+git grep -h "redux\|zustand\|mobx\|recoil\|jotai\|pinia" -- 'package.json' 2>/dev/null
 ```
 
-### 后端项目
-```bash
-# 检查缓存配置（Redis, Caffeine, Guava 等）
-grep -rh "@Cacheable\|@CacheEvict\|StringRedisTemplate\|RedisTemplate" src/ 2>/dev/null | head -20
+### 后端
 
-# 检查会话管理
-grep -rh "HttpSession\|@SessionAttribute\|session\|Cookie" src/ 2>/dev/null | head -20
+```bash
+# 缓存（Redis / Caffeine / Guava / in-memory）
+git grep -h "@Cacheable\|@CacheEvict\|StringRedisTemplate\|RedisTemplate" -- '*.java' 2>/dev/null | head -20
+git grep -h "ioredis\|cache-manager\|node-cache" -- '*.ts' '*.js' 2>/dev/null | head -20
+git grep -h "redis::\|Arc<.*Cache\|Mutex<" -- '*.rs' 2>/dev/null | head -20
+
+# 会话管理
+git grep -h "HttpSession\|@SessionAttribute\|session\|Cookie" -- '*.java' 2>/dev/null | head -20
+git grep -h "express-session\|@nestjs/jwt\|passport" -- '*.ts' '*.js' 2>/dev/null | head -20
 ```
 
-**重点提取：**
+### 重点提取
+
 - 每个 store 的状态结构 / 缓存键值结构
 - 持久化方式（sessionStorage/localStorage/内存 / Redis/本地缓存）
 - 被引用次数和主要消费者
 
 ---
 
-## 3.3 路由守卫分析（Agent 8）
+## 3.3 路由守卫 / 安全过滤链分析
 
-### 前端项目
+### 前端 / 移动端
+
 ```bash
-cat src/hooks/useRouteGuard.ts 2>/dev/null
-cat src/router/index.tsx 2>/dev/null
+git ls-files 'src/hooks/useRouteGuard.*' 'src/router/guard.*' 'src/middleware/Auth*' 2>/dev/null
+git ls-files 'src/router/index.*' 2>/dev/null
 ```
 
-### 后端项目
-```bash
-# 检查安全配置（Spring Security, Shiro, JWT 等）
-find src -type f \( -name "*SecurityConfig.java" -o -name "*ShiroConfig.java" -o -name "*WebSecurityConfig.java" \) 2>/dev/null | head -5
+### 后端
 
-# 检查拦截器/过滤器链
-grep -rh "FilterChain\|doFilter\|@PreAuthorize\|@Secured" src/ 2>/dev/null | head -20
+```bash
+# 安全配置（Spring Security / Shiro / JWT / ASP.NET Identity / OAuth）
+git ls-files 'src/**/*SecurityConfig.*' 'src/**/*ShiroConfig.*' 'src/**/*WebSecurityConfig.*' 2>/dev/null
+git ls-files 'src/**/*Auth*' 'src/**/*Jwt*' 2>/dev/null
+
+# 中间件链
+git grep -h "FilterChain\|doFilter\|@PreAuthorize\|@Secured" -- '*.java' 2>/dev/null | head -20
+git grep -h "AddAuthentication\|AddAuthorization\|\[Authorize\]" -- '*.cs' 2>/dev/null | head -20
+git grep -h "middleware\|UseMiddleware\|from_fn" -- '*.rs' '*.go' '*.ts' '*.js' 2>/dev/null | head -20
 ```
 
-**重点提取：**
+### 重点提取
+
 - 路由守卫数据流 / 安全过滤链
 - 权限校验逻辑
 - 跳转流程图
 
 ---
 
-## 3.4 核心页面数据流分析（关键改进！避免采样偏差）
+## 3.4 核心页面 / Controller 数据流分析
 
 **⚠️ 采样策略的致命缺陷：AI 容易假设"同类模块逻辑一致"，导致修改时出错。**
 
-正确做法：**先识别模块内部是否存在变异点（不同子模块有不同逻辑），再决定采样数量。**
+正确做法：**先识别模块内部是否存在差异点（不同子模块有不同逻辑），再决定采样数量。**
 
-### 3.4.1 变异点分析策略
+### 3.4.1 差异程度采样策略
 
-根据阶段 2 的变异点预检结果，决定采样数量：
-
-| 变异程度 | 判断标准 | 采样策略 |
+| 差异程度 | 判断标准 | 采样策略 |
 |---------|---------|---------|
-| **无变异** | 所有子模块的配置/逻辑相同，无差异点 | 只采样 1 个代表性页面/类 |
-| **轻度变异** | 有差异但步骤流程相似 | 采样 2-3 个代表性子模块 |
-| **高度变异** | 存在动态生成、关键组件不同、步骤数差异大 | **每个子模块都要采样** |
-| **极度变异** | 多种不同类型，每种步骤数差异大 | 必须生成完整的子模块差异表 |
+| **无差异** | 所有子模块的配置/逻辑相同 | 只采样 1 个代表性页面/类 |
+| **轻度差异** | 有差异但步骤流程相似 | 采样 2-3 个代表性子模块 |
+| **高度差异** | 存在动态生成、关键组件不同、步骤数差异大 | **每个子模块都要采样** |
+| **极度差异** | 多种不同类型，每种步骤数差异大 | 必须生成完整的子模块差异表 |
 
-### 3.4.2 前端项目采样命令
+### 3.4.2 采样命令
 
 ```bash
 # 分析一个典型列表页
@@ -127,72 +159,32 @@ cat src/pages/xxx/list.tsx 2>/dev/null
 # 分析一个表单提交页
 cat src/pages/xxx/create.tsx 2>/dev/null
 
-# 如果是极度变异（如 trace 模块）
-# 必须逐个分析所有子模块
+# 高度/极度差异：必须逐个分析所有子模块
 cat src/pages/trace/file-flow/list.tsx 2>/dev/null
 cat src/pages/trace/pc-screen/list.tsx 2>/dev/null
 cat src/pages/trace/Video/list.tsx 2>/dev/null
-# ... 其他子模块
-```
 
-### 3.4.3 后端项目采样命令
-
-```bash
-# 分析一个典型 Controller
+# 后端
 cat src/main/java/com/example/controller/xxxController.java 2>/dev/null
-
-# 分析一个典型 Service
-cat src/main/java/com/example/service/xxxService.java 2>/dev/null
-
-# 如果是极度变异，必须逐个分析所有 Controller
 cat src/main/java/com/example/controller/FileFlowController.java 2>/dev/null
 cat src/main/java/com/example/controller/PcScreenController.java 2>/dev/null
-# ... 其他 Controller
 ```
 
-### 3.4.4 生成模块间差异表（极度变异时必须生成）
+### 3.4.3 差异表（极度差异时必须生成）
 
-当发现模块内存在高度变异时，拓扑中必须包含以下表格：
-
-**前端项目：**
-```markdown
-### [模块名] 取证流程差异分析
-
-| 子模块 | 步骤数 | config.ts关键配置 | 核心组件 | 差异原因 |
-|--------|--------|------------------|---------|---------|
-| file-flow | 2步 | totalStep=2 | DocExtract | 文档直接解析 |
-| pc-screen | 3-5步 | stepsFilter | ImgCrop | 5步(部分屏拍屏) |
-| ... | ... | ... | ... | ... |
-```
-
-**后端项目：**
-```markdown
-### [模块名] API 流程差异分析
-
-| 控制器 | 路径 | 主要方法 | 业务逻辑差异 |
-|--------|------|---------|-------------|
-| FileFlowController | /api/file-flow | postUpload, getDocExtract | 文档服务器端解析 |
-| PcScreenController | /api/pc-screen | postCrop, getRotate | 屏幕区域裁剪，5步流程 |
-| ... | ... | ... | ... |
-```
-
-**警告：不要假设"所有子模块步骤相同"。即使目录结构相似，逻辑也可能完全不同。**
+详见 [phase7_differences.md](./phase7_differences.md) § 差异识别结果记录。
 
 ---
 
-## 3.5 模块间关系分析（Agent 10）
+## 3.5 模块间关系分析
 
-### 前端项目
 ```bash
-grep -rh "WaterMarkEnum\|watermarkType" --include="*.ts" --include="*.tsx" src/ 2>/dev/null | head -20
-```
+# 前端
+git grep -h "WaterMarkEnum\|watermarkType" -- '*.ts' '*.tsx' 2>/dev/null | head -20
 
-### 后端项目
-```bash
-# 检查模块间依赖关系
-grep -rh "import\|@Autowired\|@Inject" src/ --include="*.java" 2>/dev/null | \
-  grep "com\.example\." | \
-  sed 's/.*import //g; s/;//g' | \
+# 后端
+git grep -h "import\|@Autowired\|@Inject" -- '*.java' 2>/dev/null | \
+  grep "com\.example\." | sed 's/.*import //g; s/;//g' | \
   sort | uniq -c | sort -rn | head -30
 ```
 
@@ -201,24 +193,24 @@ grep -rh "import\|@Autowired\|@Inject" src/ --include="*.java" 2>/dev/null | \
 ## 3.6 数据流分析输出格式
 
 ```markdown
-### 1. HTTP请求数据流
+### 1. HTTP 请求数据流
 ```
 请求 → 拦截器 → API → 响应拦截器 → 业务代码
 ```
 
-### 2. Store/缓存 状态数据流
+### 2. Store / 缓存 状态数据流
 ```
 useUserStore: token/userinfo/userMenus → sessionStorage
 useThemeStore: layout/colors → 内存
 useConfigStore: systemConfig → 内存
 ```
 
-### 3. 路由守卫/安全过滤链 数据流
+### 3. 路由守卫 / 安全过滤链 数据流
 ```
-访问 → Token校验 → 菜单加载 → 权限码校验 → 放行/重定向
+访问 → Token 校验 → 菜单加载 → 权限码校验 → 放行/重定向
 ```
 
-### 4. 核心页面/Controller 数据流
+### 4. 核心页面 / Controller 数据流
 （选取项目中最具代表性的页面/Controller，绘制完整数据流图）
 
 ### 5. 模块间关系
@@ -231,26 +223,27 @@ useConfigStore: systemConfig → 内存
 
 **⚠️ 这是全栈项目的核心产出，用于快速定位功能修改位置。**
 
-### 定位速查表生成步骤
+### 3.7.1 定位速查表生成步骤
 
-**步骤 1: 提取前端 API 调用**
+**步骤 1：提取前端 API 调用**
+
 ```bash
 # 列出所有前端 service 文件
-find src/services -type f -name "*.ts" | sort
+git ls-files 'src/services/*.ts' 2>/dev/null | sort
 
 # 提取 API 路径（以 /api/ 开头的路径）
-grep -rh "url: ['\"]\/api\/" src/services/ --include="*.ts" | \
-  sed "s/.*url: ['\"]\/api\///g; s/['\"]//g" | sort | uniq
+git grep -h "url: ['\"]\/api\/" -- 'src/services/*.ts' 2>/dev/null | \
+  sed "s/.*url: ['\"]\/api\///g; s/['\"]//g" | sort -u
 ```
 
-**步骤 2: 映射到后端 Controller**
+**步骤 2：映射到后端 Controller**
+
 ```bash
 # 搜索后端 Controller 中的路由映射
-grep -rh "@RequestMapping\|@GetMapping\|@PostMapping" Service/*/src \
-  --include="*.java" | grep -i "forensic\|watermark\|trace" | head -30
+git grep -h "@RequestMapping\|@GetMapping\|@PostMapping" -- '*.java' 2>/dev/null | head -30
 ```
 
-**步骤 3: 构建定位速查表**
+**步骤 3：构建定位速查表**
 
 ```markdown
 ### 前后端定位速查表
@@ -262,7 +255,7 @@ grep -rh "@RequestMapping\|@GetMapping\|@PostMapping" Service/*/src \
 | 图片水印嵌入 | pages/middleware/picture/* | /api/picWatermark/v1/embedPicWM | gw-biz-service | gw-picsy-service | GwPicWatermarkController.java |
 ```
 
-### 定位速查表用途
+### 3.7.2 定位速查表用途
 
 | 场景 | 如何使用速查表 |
 |-----|---------------|
@@ -271,18 +264,18 @@ grep -rh "@RequestMapping\|@GetMapping\|@PostMapping" Service/*/src \
 | 排查认证问题 | 查找 "oauth" → 定位到 gw-iam-service |
 | 定位涉及服务 | 查看"涉及微服务"列 → 了解完整调用链路 |
 
-### 微服务定位规则
+### 3.7.3 微服务定位规则（参考示例）
 
 **按 API 路径前缀定位：**
 ```
 /api/forensicService/*     → gw-forensic-service
 /api/docWatermark/*        → gw-biz-service
-/api/picWatermark/*       → gw-biz-service  
-/api/videoWatermark/*     → gw-biz-service
-/api/traceability/*       → gw-biz-service
-/api/oauth/*              → gw-iam-service
-/api/clientService/*      → gw-biz-service (终端相关)
-/api/license/*            → gw-license-manage-service
+/api/picWatermark/*        → gw-biz-service
+/api/videoWatermark/*      → gw-biz-service
+/api/traceability/*        → gw-biz-service
+/api/oauth/*               → gw-iam-service
+/api/clientService/*       → gw-biz-service
+/api/license/*             → gw-license-manage-service
 ```
 
 **按功能领域定位：**
@@ -296,20 +289,20 @@ grep -rh "@RequestMapping\|@GetMapping\|@PostMapping" Service/*/src \
 API 网关        → gw-gateway-service
 ```
 
-### 完整调用链路示例
+> **⚠️ 这是参考示例，不是规则。** 实际项目需根据 `types/backend.md § 服务名交叉验证` 进行**真实交叉验证**后才能确定归属。
 
-**取证流程调用链：**
+### 3.7.4 完整调用链路示例
+
 ```
-前端 → gw-gateway-service → gw-forensic-service → 
+取证流程调用链：
+前端 → gw-gateway-service → gw-forensic-service →
   ├→ gw-biz-service (溯源对象)
   ├→ gw-docsy-service (文档算法 Go)
-  ├→ gw-picsy-service (图片算法 Go)  
+  ├→ gw-picsy-service (图片算法 Go)
   └→ gw-videosy-service (视频算法 Go)
-```
 
-**水印嵌入调用链：**
-```
-前端 → gw-gateway-service → gw-biz-service → 
+水印嵌入调用链：
+前端 → gw-gateway-service → gw-biz-service →
   ├→ gw-docsy-service (PDF/OFD/Office)
   ├→ gw-picsy-service (图片)
   └→ gw-videosy-service (视频)

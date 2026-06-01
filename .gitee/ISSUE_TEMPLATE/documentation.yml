@@ -1,0 +1,57 @@
+name: Documentation Improvement
+description: 改进文档（README、SKILL.md、示例等）
+title: "[Docs] "
+labels: ["documentation"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      content: |
+        文档改进也是宝贵的贡献！请说明问题和建议。
+
+  - type: dropdown
+    id: doc-file
+    attributes:
+      label: 哪个文件
+      options:
+        - README.md
+        - SKILL.md
+        - CONTRIBUTING.md
+        - CHANGELOG.md
+        - phases/*.md
+        - types/*.md
+        - templates/*.md
+        - examples/*.md
+        - 其他
+    validations:
+      required: true
+
+  - type: dropdown
+    id: doc-type
+    attributes:
+      label: 改进类型
+      options:
+        - 错别字 / 语法错误
+        - 内容不准确
+        - 内容缺失
+        - 翻译改进
+        - 增加示例
+        - 结构调整
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: 具体说明
+      description: 描述问题或建议
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: 建议改法
+      description: 你建议怎么改？贴出修改后的内容更好
+    validations:
+      required: false

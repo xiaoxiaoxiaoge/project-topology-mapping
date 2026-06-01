@@ -1,0 +1,104 @@
+name: Bug Report
+description: 报告 Bug，帮助我们改进
+title: "[Bug] "
+labels: ["bug", "needs-triage"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      content: |
+        感谢你提 Bug！请尽量详细填写以下信息，帮我们快速定位和修复。
+
+  - type: textarea
+    id: description
+    attributes:
+      label: 问题描述
+      description: 清晰简洁地描述 bug 是什么
+      placeholder: |
+        例如：在执行 /project-topology-mapping 扫描 HarmonyOS 项目时，生成的拓扑文件缺少 X 章节。
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: 复现步骤
+      description: 触发 bug 的步骤（一步步列出）
+      placeholder: |
+        1. 执行 `/project-topology-mapping`
+        2. 选择 X 项目类型
+        3. 进入 X 阶段
+        4. 看到 X 错误
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期望行为
+      description: 你期望发生什么
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: 实际行为
+      description: 实际发生了什么
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: 错误日志
+      description: 粘贴相关错误输出 / 截图
+      render: shell
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: 操作系统
+      options:
+        - macOS
+        - Linux
+        - Windows (Git Bash)
+        - Windows (WSL)
+        - Windows (PowerShell)
+    validations:
+      required: true
+
+  - type: input
+    id: claude-version
+    attributes:
+      label: Claude Code 版本
+      description: 运行 `claude --version` 查看
+      placeholder: "1.0.0"
+    validations:
+      required: true
+
+  - type: input
+    id: skill-version
+    attributes:
+      label: Skill 版本
+      description: 查看 CHANGELOG.md 或 git log
+      placeholder: "2.0.0"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: project-type
+    attributes:
+      label: 扫描的项目类型
+      options:
+        - 前端 (React/Vue/Angular)
+        - 后端 (Java/Go/Python/Node/.NET/Rust)
+        - 全栈
+        - 移动端 (Android/iOS/RN/Flutter)
+        - 小程序
+        - 桌面端 (Electron/Tauri)
+        - HarmonyOS
+        - 混合项目
+        - 其他
+    validations:
+      required: true

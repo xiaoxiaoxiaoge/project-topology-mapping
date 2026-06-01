@@ -76,3 +76,70 @@ grep -rh "from ['\"]@/services/" --include="*.tsx" --include="*.ts" src/ 2>/dev/
 # 5. router modules 数量
 ls src/router/modules/*.tsx 2>/dev/null | wc -l
 ```
+
+---
+
+## 差异点检测
+
+> 用于阶段 2 差异点预检 + 阶段 7 同类模块差异识别。
+> 同一父模块下的子项差异越大，越需要逐个采样而不是抽样。
+
+```bash
+# 1. 列出所有子模块（识别有多少个同级的相似模块）
+find src/pages/<module> -maxdepth 1 -type d | sort
+
+# 2. 对比各子模块的 config.ts 中的关键配置（检测步骤数差异）
+git ls-files 'src/pages/<module>/*/config.ts' 2>/dev/null | \
+  xargs -I {} sh -c 'echo "=== {} ==="; cat {}'
+
+# 3. 检查动态步骤生成机制
+git grep -h "totalStep\|stepsFilter\|steps\[" -- 'src/pages/<module>/*/config.ts' 2>/dev/null
+
+# 4. 检查关键组件是否只在某些子模块中存在
+git grep -h "ImgCrop\|ImgRotate\|ImgCorrect\|ImgExtract\|DocExtract" \
+  -- 'src/pages/<module>/*/trace.tsx' 2>/dev/null | sort | uniq -c | sort -rn
+
+# 5. 检查枚举或常量定义映射到不同子模块
+git grep -h "WaterMarkEnum\|watermarkType" -- 'src/pages/<module>/*.{ts,tsx}' 2>/dev/null | head -20
+
+# 6. API 调用差异（不同子模块调用的 services 是否不同）
+git grep -h "from ['\"]@/services/" -- 'src/pages/<module>/*/list.tsx' 2>/dev/null | \
+  sed "s/.*from ['\"]@\/services\///g; s/['\"].*//g" | \
+  sort | uniq -c | sort -rn
+
+# 7. 路由/跳转逻辑差异
+git grep -h "router\.\|navigate\|useNavigate\|history\." \
+  -- 'src/pages/<module>/*/trace.tsx' 2>/dev/null | sort -u
+
+# 8. 表单处理差异
+git grep -h "onFinish\|onSubmit\|handleSubmit" \
+  -- 'src/pages/<module>/*/trace.tsx' 2>/dev/null | sort -u
+
+# 9. 条件渲染差异
+git grep -h "visible\|show\|display\|render" -- 'src/pages/<module>/*/trace.tsx' 2>/dev/null | \
+  grep -E "step|Step" | sort -u
+
+# 10. 页面间状态传递方式
+git grep -h "useState\|useContext\|createContext\|Provider" \
+  -- 'src/pages/<module>/*/trace.tsx' 2>/dev/null | sort | uniq -c | sort -rn
+
+# 11. 错误处理逻辑差异
+git grep -h "message\.\|notification\|Modal\.error\|onError" \
+  -- 'src/pages/<module>/*/trace.tsx' 2>/dev/null | sort -u
+
+# 12. 加载状态处理差异
+git grep -h "loading\|isLoading\|Loading\|Spin" \
+  -- 'src/pages/<module>/*/trace.tsx' 2>/dev/null | sort -u
+```
+
+### 差异表记录格式
+
+```markdown
+### [模块名] 流程差异分析
+
+| 子模块 | 步骤数 | config.ts 关键配置 | 核心组件 | 差异原因 |
+|--------|--------|------------------|---------|---------|
+| file-flow | 2 步 | totalStep=2 | DocExtract | 文档直接解析 |
+| pc-screen | 3-5 步 | stepsFilter | ImgCrop | 5 步（部分屏拍屏） |
+| ... | ... | ... | ... | ... |
+```

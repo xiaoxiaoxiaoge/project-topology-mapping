@@ -1,0 +1,63 @@
+name: Feature Request
+description: 提议新功能
+title: "[Feature] "
+labels: ["enhancement", "needs-triage"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      content: |
+        欢迎提议新功能！请清晰描述需求和使用场景。
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: 解决的问题
+      description: 你想解决什么问题？痛点是什么？
+      placeholder: |
+        例如：当前扫描大型 monorepo 项目时，token 消耗过高，希望能支持"增量扫描"。
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: 期望的解决方案
+      description: 你希望的功能 / API 长什么样？
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: 考虑过的替代方案
+      description: 是否有其他备选方案？你为什么觉得这个最好？
+    validations:
+      required: false
+
+  - type: textarea
+    id: use-case
+    attributes:
+      label: 使用场景
+      description: 在什么场景下会用？举个具体例子
+    validations:
+      required: true
+
+  - type: dropdown
+    id: willingness
+    attributes:
+      label: 实现意愿
+      description: 你是否愿意自己实现并提 PR？
+      options:
+        - 愿意，我可以提 PR
+        - 愿意，但需要指导
+        - 暂不愿意，希望官方实现
+        - 不确定
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: 其他信息
+      description: 截图、参考链接、相关 issue 等
