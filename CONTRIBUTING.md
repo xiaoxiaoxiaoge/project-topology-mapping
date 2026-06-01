@@ -10,7 +10,7 @@
 
 ### 🐛 报告 Bug
 
-发现 bug？请用 [Bug Report 模板](https://gitee.com/xiaoxiaoxiaoge/project-topology-mapping/issues/new?template=bug_report.yml) 提 issue。
+发现 bug？请用 [Bug Report 模板](https://gitee.com/www_mao_com/project-topology-mapping/issues/new?template=bug_report.yml) 提 issue。
 
 请包含：
 - 复现步骤
@@ -21,7 +21,7 @@
 
 ### 💡 提出新功能
 
-想要新功能？请用 [Feature Request 模板](https://gitee.com/xiaoxiaoxiaoge/project-topology-mapping/issues/new?template=feature_request.yml) 提 issue。
+想要新功能？请用 [Feature Request 模板](https://gitee.com/www_mao_com/project-topology-mapping/issues/new?template=feature_request.yml) 提 issue。
 
 请说明：
 - 解决的问题
@@ -34,7 +34,7 @@
 文档错误、翻译改进、示例补充都欢迎！
 
 - 中英文 README 翻译
-- 新增 `types/xxx.md` 覆盖更多项目类型（欢迎 KMP、SmartTV、Qt 等）
+- 新增 `types/<your-type>.md` 覆盖更多项目类型（欢迎 KMP、SmartTV、Qt 等）
 - 补充 `examples/` 中的真实案例
 
 ### 🔧 提交代码
@@ -53,7 +53,7 @@ git clone https://gitee.com/<your-username>/project-topology-mapping.git
 cd project-topology-mapping
 
 # 添加 upstream
-git remote add upstream https://gitee.com/xiaoxiaoxiaoge/project-topology-mapping.git
+git remote add upstream https://gitee.com/www_mao_com/project-topology-mapping.git
 ```
 
 ### 2. 创建分支
@@ -73,7 +73,7 @@ git checkout -b fix/bug-description
 
 ### 3. 编写代码
 
-#### 3.1 新增 `types/xxx.md`
+#### 3.1 新增 `types/<your-type>.md`
 
 如果你要支持新的项目类型：
 
@@ -86,7 +86,7 @@ git checkout -b fix/bug-description
    - 阶段 7 检查
    - 入口点
 3. 在 `SKILL.md` § 项目类型速查表 加一行
-4. 在 `templates/xxx_output.md` 创建对应输出模板
+4. 在 `templates/<your-type>_output.md` 创建对应输出模板
 5. 提交 PR
 
 #### 3.2 修改 phase 文件
@@ -202,18 +202,18 @@ project-topology-mapping/
 
 找 `good first issue` 标签的 issue 开始：
 
-[Good First Issues](https://gitee.com/xiaoxiaoxiaoge/project-topology-mapping/issues?q=label%3A%22good+first+issue%22)
+[Good First Issues](https://gitee.com/www_mao_com/project-topology-mapping/issues?q=label%3A%22good+first+issue%22)
 
 ---
 
 ## 社区
 
-- 💬 讨论：[Discussion 区](https://gitee.com/xiaoxiaoxiaoge/project-topology-mapping/issues)
+- 💬 讨论：[Discussion 区](https://gitee.com/www_mao_com/project-topology-mapping/issues)
 - 📧 邮件：<your-email@example.com>
-- 🐛 Bug 报告：[GitHub Issues](https://gitee.com/xiaoxiaoxiaoge/project-topology-mapping/issues)
+- 🐛 Bug 报告：[GitHub Issues](https://gitee.com/www_mao_com/project-topology-mapping/issues)
 
 ---
 
 ## 致谢
 
-感谢所有 [贡献者](https://gitee.com/xiaoxiaoxiaoge/project-topology-mapping/contributors)！🎉
+感谢所有 [贡献者](https://gitee.com/www_mao_com/project-topology-mapping/contributors)！🎉

@@ -13,8 +13,8 @@
 
 [![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Skill-blueviolet)](https://claude.com)
-[![Gitee](https://img.shields.io/badge/Gitee-推荐项目-c71d23?logo=gitee)](https://gitee.com/xiaoxiaoxiaoge/project-topology-mapping)
-[![GitHub](https://img.shields.io/badge/GitHub-镜像-181717?logo=github)](https://github.com/xiaoxiaoxiaoge/project-topology-mapping)
+[![Gitee](https://img.shields.io/badge/Gitee-推荐项目-c71d23?logo=gitee)](https://gitee.com/www_mao_com/project-topology-mapping)
+[![GitHub](https://img.shields.io/badge/GitHub-镜像-181717?logo=github)](https://github.com/www_mao_com/project-topology-mapping)
 [![Version](https://img.shields.io/badge/version-2.0.0-blue)](./CHANGELOG.md)
 
 ---
@@ -161,15 +161,15 @@
 
 ```bash
 # macOS / Linux
-git clone https://gitee.com/xiaoxiaoxiaoge/project-topology-mapping.git \
+git clone https://gitee.com/www_mao_com/project-topology-mapping.git \
   ~/.claude/skills/project-topology-mapping
 
 # 或从 GitHub 镜像
-git clone https://github.com/xiaoxiaoxiaoge/project-topology-mapping.git \
+git clone https://github.com/www_mao_com/project-topology-mapping.git \
   ~/.claude/skills/project-topology-mapping
 
 # Windows (PowerShell)
-git clone https://gitee.com/xiaoxiaoxiaoge/project-topology-mapping.git `
+git clone https://gitee.com/www_mao_com/project-topology-mapping.git `
   $env:USERPROFILE\.claude\skills\project-topology-mapping
 ```
 
@@ -481,7 +481,7 @@ A: 详见 [phases/phase5_memory.md § 重新扫描条件](./phases/phase5_memory
 
 A: 见 [CONTRIBUTING.md](./CONTRIBUTING.md)。欢迎：
 - 提 Issue 报告 bug
-- 提 PR 增加新的 `types/xxx.md`（如 KMP、Qt、SmartTV）
+- 提 PR 增加新的 `types/<your-type>.md`（如 KMP、Qt、SmartTV）
 - 翻译 README / SKILL.md
 - 补充 examples/
 
@@ -491,10 +491,10 @@ A: 见 [CONTRIBUTING.md](./CONTRIBUTING.md)。欢迎：
 
 欢迎任何形式的贡献！详见 [CONTRIBUTING.md](./CONTRIBUTING.md)。
 
-- 🐛 [提 Bug](https://gitee.com/xiaoxiaoxiaoge/project-topology-mapping/issues)
-- 💡 [提需求](https://gitee.com/xiaoxiaoxiaoge/project-topology-mapping/issues)
-- 🔧 [提 PR](https://gitee.com/xiaoxiaoxiaoge/project-topology-mapping/pulls)
-- 📖 [完善文档](https://gitee.com/xiaoxiaoxiaoge/project-topology-mapping/wiki)
+- 🐛 [提 Bug](https://gitee.com/www_mao_com/project-topology-mapping/issues)
+- 💡 [提需求](https://gitee.com/www_mao_com/project-topology-mapping/issues)
+- 🔧 [提 PR](https://gitee.com/www_mao_com/project-topology-mapping/pulls)
+- 📖 [完善文档](https://gitee.com/www_mao_com/project-topology-mapping/wiki)
 
 行为准则：[CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md)
 
@@ -514,23 +514,23 @@ A: 见 [CONTRIBUTING.md](./CONTRIBUTING.md)。欢迎：
 
 ```bibtex
 @software{project_topology_mapping_2026,
-  author = {xiaoxiaoxiaoge},
+  author = {www_mao_com},
   title = {Project Topology Mapping: A Claude Code Skill for Project Structure Scanning},
   year = {2026},
-  url = {https://gitee.com/xiaoxiaoxiaoge/project-topology-mapping},
+  url = {https://gitee.com/www_mao_com/project-topology-mapping},
   version = {2.0.0}
 }
 ```
 
 或在正文中：
 
-> 本项目使用 [Project Topology Mapping](https://gitee.com/xiaoxiaoxiaoge/project-topology-mapping) 生成项目拓扑。
+> 本项目使用 [Project Topology Mapping](https://gitee.com/www_mao_com/project-topology-mapping) 生成项目拓扑。
 
 ---
 
 ## 许可
 
-[MIT License](./LICENSE) © 2026 xiaoxiaoxiaoge
+[MIT License](./LICENSE) © 2026 www_mao_com
 
 ---
 
@@ -543,4 +543,4 @@ A: 见 [CONTRIBUTING.md](./CONTRIBUTING.md)。欢迎：
 - 🍴 **Fork** — 二次开发并提 PR
 - 📢 **分享** — 推荐给同事 / 朋友圈
 
-码云项目页：[gitee.com/xiaoxiaoxiaoge/project-topology-mapping](https://gitee.com/xiaoxiaoxiaoge/project-topology-mapping)
+码云项目页：[gitee.com/www_mao_com/project-topology-mapping](https://gitee.com/www_mao_com/project-topology-mapping)

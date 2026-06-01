@@ -9,35 +9,40 @@
 
 ## 1.1 检测项目类型
 
+> **错误防护说明：** 用 `test -f` 而非 `ls && ...`。
+> `ls xxx` 在文件不存在时返回 exit 2，会让 `&&` 链静默断掉；
+> `test -f xxx` 在文件不存在时返回 exit 1，行为一致但更稳健。
+
 ```bash
 # 检查前端特征（package.json, src/, pages/, components/）
-ls package.json 2>/dev/null && head -n 20 package.json
+test -f package.json && head -n 20 package.json
 
 # 检查后端特征（pom.xml, go.mod, requirements.txt, src/main/, app.py）
-ls pom.xml 2>/dev/null && echo "=== Maven/Java ===" && head -n 30 pom.xml
-ls go.mod 2>/dev/null && echo "=== Go ===" && head -n 15 go.mod
-ls requirements.txt 2>/dev/null && echo "=== Python ===" && head -n 20 requirements.txt
-ls Cargo.toml 2>/dev/null && echo "=== Rust ===" && head -n 20 Cargo.toml
-ls package.json 2>/dev/null && git grep -h "express\|@nestjs\|fastify" -- package.json 2>/dev/null | head -n 3
-ls *.csproj 2>/dev/null && echo "=== .NET ==="
+test -f pom.xml && echo "=== Maven/Java ===" && head -n 30 pom.xml
+test -f go.mod && echo "=== Go ===" && head -n 15 go.mod
+test -f requirements.txt && echo "=== Python ===" && head -n 20 requirements.txt
+test -f Cargo.toml && echo "=== Rust ===" && head -n 20 Cargo.toml
+test -f package.json && git grep -h "express\|@nestjs\|fastify" -- package.json 2>/dev/null | head -n 3
+if ls *.csproj 2>/dev/null | head -n 1 >/dev/null; then echo "=== .NET ==="; fi
 
 # 检查移动端特征
-ls app/src/main/AndroidManifest.xml 2>/dev/null && echo "=== Android ==="
-ls *.xcodeproj 2>/dev/null && echo "=== iOS ==="
-ls pubspec.yaml 2>/dev/null && echo "=== Flutter ==="
-ls package.json 2>/dev/null && git grep -h "react-native" -- package.json 2>/dev/null | head -n 3
+test -f app/src/main/AndroidManifest.xml && echo "=== Android ==="
+# .xcodeproj 是目录而不是文件，用 if-then 形式
+if ls *.xcodeproj 2>/dev/null | head -n 1 >/dev/null; then echo "=== iOS ==="; fi
+test -f pubspec.yaml && echo "=== Flutter ==="
+test -f package.json && git grep -h "react-native" -- package.json 2>/dev/null | head -n 3
 
 # 检查小程序特征
-ls app.json 2>/dev/null && echo "=== WeChat Mini Program ==="
-ls app.acss 2>/dev/null && echo "=== Alipay Mini Program ==="
-ls project.swan.json 2>/dev/null && echo "=== Baidu Mini Program ==="
+test -f app.json && echo "=== WeChat Mini Program ==="
+test -f app.acss && echo "=== Alipay Mini Program ==="
+test -f project.swan.json && echo "=== Baidu Mini Program ==="
 
 # 检查桌面端特征
-ls package.json 2>/dev/null && git grep -h "\"electron\"" -- package.json 2>/dev/null | head -n 3
-ls src-tauri/Cargo.toml 2>/dev/null && echo "=== Tauri ==="
+test -f package.json && git grep -h "\"electron\"" -- package.json 2>/dev/null | head -n 3
+test -f src-tauri/Cargo.toml && echo "=== Tauri ==="
 
 # 检查 HarmonyOS 特征（entry/src/main/, *.ets, lib*.so）
-ls entry/src/main/ets 2>/dev/null && echo "=== HarmonyOS ==="
+test -d entry/src/main/ets && echo "=== HarmonyOS ==="
 git ls-files '*.ets' 2>/dev/null | head -n 10
 ```
 

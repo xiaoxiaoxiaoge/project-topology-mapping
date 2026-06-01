@@ -18,6 +18,7 @@
 - **SKILL.md 顶部 frontmatter** — `name` + `description` + `trigger`，让 Claude Code / Mavis 能自动触发
 - **7 个独立 phase 文件** — 拆掉原 `phase4_output.md`（一个文件装 4 阶段），每个阶段独立成文
 - **3 档扫描深度** — 快速（~2k token） / 标准（~8k） / 深度（~20k+）
+  - 📌 **注意**：这里的 token 估算指**扫描用户项目时产生的 `.project-topology.md` 输出大小**，**不是** skill 自身文档大小。skill 自身文档是给 AI 阅读的，扫描用户项目时**只读取必要的子集**（按项目类型分发的检测命令 + 对应 phases），所以实际 token 消耗受扫描深度档位控制。
 - **触发条件** — 顶部加 "When to use / When NOT to use" 明确边界
 - **`types/` 作为 single source of truth** — phases/ 不再重复检测命令，改用 `@see` 引用
 - **3 个新项目类型** — 移动端（Android/iOS/RN/Flutter）、小程序（微信/支付宝/抖音/百度）、桌面端（Electron/Tauri）
@@ -89,5 +90,5 @@
 
 ---
 
-[1.0.0]: https://gitee.com/xiaoxiaoxiaoge/project-topology-mapping/releases/tag/v1.0.0
-[2.0.0]: https://gitee.com/xiaoxiaoxiaoge/project-topology-mapping/releases/tag/v2.0.0
+[1.0.0]: https://gitee.com/www_mao_com/project-topology-mapping/releases/tag/v1.0.0
+[2.0.0]: https://gitee.com/www_mao_com/project-topology-mapping/releases/tag/v2.0.0

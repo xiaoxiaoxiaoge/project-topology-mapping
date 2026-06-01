@@ -155,11 +155,11 @@ Claude Code 加载 SKILL.md
    ↓
 SKILL.md 路由到 phase1_detection.md
    ↓
-phase1 检测项目类型 → 选 types/xxx.md
+phase1 检测项目类型 → 选对应 types/<type>.md
    ↓
-phase2-3 加载 types/xxx.md 的检测命令
+phase2-3 加载 types/<type>.md 的检测命令
    ↓
-phase4 加载 templates/xxx_output.md 的输出模板
+phase4 加载 templates/<type>_output.md 的输出模板
    ↓
 phase5 写入 .project-topology.md + 记忆文件
    ↓

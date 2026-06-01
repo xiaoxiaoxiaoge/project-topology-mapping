@@ -461,14 +461,16 @@ git grep -h "config::\|env::var\|Figment" -- '*.rs' 2>/dev/null | sort -u | head
 
 ## 通用后端采样命令
 
-```bash
-# 分析一个典型 Controller
-cat src/main/java/com/example/controller/xxxController.java 2>/dev/null
-cat src/controllers/UserController.ts 2>/dev/null
+> ⚠️ **以下是模板路径**（`com/example`、`UserController`、`<Name1>` 等都是占位符）。**实际使用时必须替换为你的项目真实路径。** 直接复制执行会找不到文件。
 
-# 分析一个典型 Service
-cat src/main/java/com/example/service/xxxService.java 2>/dev/null
-cat src/services/UserService.ts 2>/dev/null
+```bash
+# 分析一个典型 Controller（请替换 com/example 为实际包路径）
+cat src/main/java/com/example/controller/<Name1>Controller.java 2>/dev/null
+cat src/controllers/<Name1>Controller.ts 2>/dev/null
+
+# 分析一个典型 Service（请替换 com/example 为实际包路径）
+cat src/main/java/com/example/service/<Name1>Service.java 2>/dev/null
+cat src/services/<Name1>Service.ts 2>/dev/null
 
 # 高度变异：必须逐个采样（占位符）
 cat src/main/java/com/example/controller/<Name1>Controller.java

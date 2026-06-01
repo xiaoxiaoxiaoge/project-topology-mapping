@@ -46,6 +46,13 @@ git rev-parse --show-toplevel  # 应该输出 <your-project> 绝对路径
 | 计数 | `wc -l` | `(Get-Content x \| Measure-Object -Line).Lines` |
 | 递归找文件 | `find . -name "*.java"` | `Get-ChildItem -Recurse -Filter *.java` |
 | 文本搜索 | `grep -r "X" --include="*.java"` | `Select-String -Path "*.java" -Pattern "X" -Recurse` |
+| 文本搜索（扩展正则） | `grep -E "pat1\|pat2"` | `Select-String -Pattern "pat1\|pat2"` |
+| 去重排序 | `sort -u` | `Sort-Object -Unique` |
+| 文本替换 | `sed -i 's/a/b/g' file` | `(Get-Content file) -replace 'a','b' \| Set-Content file` |
+| 对比文件 | `diff a b` | `Compare-Object (Get-Content a) (Get-Content b)` |
+| 字符串拼接 | `cat a b > c` | `Get-Content a, b \| Set-Content c` |
+| 写文件 | `cat > f <<EOF ... EOF` | `Set-Content -Path f -Value @"..."@` |
+| 删文件 | `rm f` | `Remove-Item f`（建议用 mavis-trash） |
 
 > **本 skill 优先使用 `git ls-files` / `git grep` 等 Git 原生命令**，所有平台（macOS/Linux/Windows Git Bash/WSL）都自带 Git，跨平台一致性最好。
 
