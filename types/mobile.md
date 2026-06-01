@@ -16,11 +16,11 @@ ls -la *.xcodeproj *.xcworkspace Podfile 2>/dev/null
 
 # React Native
 ls -la package.json metro.config.js react-native.config.js 2>/dev/null
-git ls-files '*.tsx' '*.ts' 2>/dev/null | head -1 | xargs grep -l "react-native" 2>/dev/null
+git ls-files '*.tsx' '*.ts' 2>/dev/null | head -n 1 | xargs grep -l "react-native" 2>/dev/null
 
 # Flutter
 ls -la pubspec.yaml 2>/dev/null
-git ls-files 'lib/*.dart' 2>/dev/null | head -1
+git ls-files 'lib/*.dart' 2>/dev/null | head -n 1
 
 # 跨平台 (uni-app / Taro)
 ls -la src/manifest.json 2>/dev/null            # uni-app
@@ -43,16 +43,16 @@ ls -la config/index.js project.config.json 2>/dev/null  # Taro
 
 ```bash
 # 1. Java/Kotlin 源码
-git ls-files 'app/src/main/java/**/*.java' 'app/src/main/java/**/*.kt' 2>/dev/null | head -150
+git ls-files 'app/src/main/java/**/*.java' 'app/src/main/java/**/*.kt' 2>/dev/null | head -n 150
 
 # 2. 资源文件
-git ls-files 'app/src/main/res/*' 2>/dev/null | head -50
+git ls-files 'app/src/main/res/*' 2>/dev/null | head -n 50
 
 # 3. AndroidManifest
 cat app/src/main/AndroidManifest.xml 2>/dev/null
 
 # 4. Gradle 配置
-cat app/build.gradle app/build.gradle.kts 2>/dev/null | head -50
+cat app/build.gradle app/build.gradle.kts 2>/dev/null | head -n 50
 
 # 5. Activity / Fragment / Service
 git ls-files 'app/src/main/java/**/*Activity.java' 'app/src/main/java/**/*Fragment.java' \
@@ -66,7 +66,7 @@ git ls-files 'app/src/main/java/**/*Adapter.java' 'app/src/main/java/**/*ViewHol
 
 ```bash
 # 1. 第三方库（build.gradle dependencies）
-git grep -h "implementation\|api" -- '*.gradle' '*.gradle.kts' 2>/dev/null | head -30
+git grep -h "implementation\|api" -- '*.gradle' '*.gradle.kts' 2>/dev/null | head -n 30
 
 # 2. 权限使用
 git grep -h "uses-permission" -- 'AndroidManifest.xml' 2>/dev/null
@@ -88,7 +88,7 @@ git ls-files 'app/src/main/java/**/*Provider.java' 2>/dev/null
 git ls-files 'app/src/main/java/**/*Activity.java' 2>/dev/null | sort
 
 # 2. Activity 间跳转关系
-git grep -h "startActivity\|Intent(" -- '*.java' '*.kt' 2>/dev/null | head -30
+git grep -h "startActivity\|Intent(" -- '*.java' '*.kt' 2>/dev/null | head -n 30
 
 # 3. Fragment 差异
 git ls-files 'app/src/main/java/**/*Fragment.java' 2>/dev/null
@@ -97,7 +97,7 @@ git ls-files 'app/src/main/java/**/*Fragment.java' 2>/dev/null
 git grep -h "ViewModelProvider\|by viewModels" -- '*.java' '*.kt' 2>/dev/null | sort -u
 
 # 5. 网络框架（Retrofit / OkHttp / Volley）
-git grep -h "Retrofit\|OkHttp\|Volley\|@GET\|@POST" -- '*.java' '*.kt' 2>/dev/null | sort -u | head -20
+git grep -h "Retrofit\|OkHttp\|Volley\|@GET\|@POST" -- '*.java' '*.kt' 2>/dev/null | sort -u | head -n 20
 
 # 6. 数据库（Room / SQLite / Realm）
 git grep -h "@Entity\|@Dao\|RoomDatabase\|SQLiteOpenHelper\|RealmObject" \
@@ -105,7 +105,7 @@ git grep -h "@Entity\|@Dao\|RoomDatabase\|SQLiteOpenHelper\|RealmObject" \
 
 # 7. 协程 / RxJava
 git grep -h "CoroutineScope\|launch\|async\|Observable\|Flowable" \
-  -- '*.java' '*.kt' 2>/dev/null | sort -u | head -20
+  -- '*.java' '*.kt' 2>/dev/null | sort -u | head -n 20
 
 # 8. 依赖注入（Hilt / Dagger / Koin）
 git grep -h "@Inject\|@HiltAndroidApp\|@Module\|@Provides" -- '*.java' '*.kt' 2>/dev/null
@@ -132,10 +132,10 @@ git grep -h "putExtra\|getStringExtra\|getParcelableExtra" -- '*.java' '*.kt' 2>
 
 ```bash
 # 1. Swift 源码
-git ls-files '*.swift' 2>/dev/null | head -150
+git ls-files '*.swift' 2>/dev/null | head -n 150
 
 # 2. Objective-C 源码
-git ls-files '*.m' '*.h' 2>/dev/null | head -50
+git ls-files '*.m' '*.h' 2>/dev/null | head -n 50
 
 # 3. Storyboard / XIB
 git ls-files '*.storyboard' '*.xib' 2>/dev/null
@@ -157,7 +157,7 @@ git ls-files '*ViewController.swift' '*ViewController.m' 2>/dev/null
 git grep -h "^pod " -- 'Podfile' 2>/dev/null
 
 # 2. Swift Package Manager
-cat Package.swift 2>/dev/null | head -50
+cat Package.swift 2>/dev/null | head -n 50
 
 # 3. 权限（Info.plist）
 git grep -h "NS.*UsageDescription" -- 'Info.plist' 2>/dev/null
@@ -173,10 +173,10 @@ git grep -h "CFBundleURLSchemes\|CFBundleURLTypes" -- 'Info.plist' 2>/dev/null
 git ls-files '*ViewController.swift' 2>/dev/null | sort
 
 # 2. 页面间导航
-git grep -h "navigationController?.pushViewController\|present(\|performSegue" -- '*.swift' 2>/dev/null | head -30
+git grep -h "navigationController?.pushViewController\|present(\|performSegue" -- '*.swift' 2>/dev/null | head -n 30
 
 # 3. Storyboard Segue
-git grep -h "segue.identifier\|performSegue" -- '*.swift' '*.storyboard' 2>/dev/null | head -20
+git grep -h "segue.identifier\|performSegue" -- '*.swift' '*.storyboard' 2>/dev/null | head -n 20
 
 # 4. 网络框架（Alamofire / URLSession）
 git grep -h "Alamofire\|URLSession\|Moya" -- '*.swift' 2>/dev/null | sort -u
@@ -185,7 +185,7 @@ git grep -h "Alamofire\|URLSession\|Moya" -- '*.swift' 2>/dev/null | sort -u
 git grep -h "NSManagedObject\|@NSManaged\|Realm\|UserDefaults" -- '*.swift' 2>/dev/null | sort -u
 
 # 6. 响应式框架（Combine / RxSwift）
-git grep -h "@Published\|PassthroughSubject\|Observable" -- '*.swift' 2>/dev/null | sort -u | head -20
+git grep -h "@Published\|PassthroughSubject\|Observable" -- '*.swift' 2>/dev/null | sort -u | head -n 20
 ```
 
 ---
@@ -196,7 +196,7 @@ git grep -h "@Published\|PassthroughSubject\|Observable" -- '*.swift' 2>/dev/nul
 
 ```bash
 # 1. 源码
-git ls-files 'src/*.tsx' 'src/*.ts' '*.tsx' '*.ts' 2>/dev/null | head -150
+git ls-files 'src/*.tsx' 'src/*.ts' '*.tsx' '*.ts' 2>/dev/null | head -n 150
 
 # 2. 屏幕 (Screens)
 git ls-files 'src/screens/*' '*Screen.tsx' '*Screen.ts' 2>/dev/null
@@ -218,11 +218,11 @@ git ls-files 'src/services/*' 'src/api/*' 2>/dev/null
 
 ```bash
 # 1. package.json 依赖
-cat package.json | head -60
+cat package.json | head -n 60
 
 # 2. 路由库
 git grep -h "react-navigation\|react-native-navigation\|@react-navigation" \
-  -- 'package.json' '*.ts' '*.tsx' 2>/dev/null | sort -u | head -10
+  -- 'package.json' '*.ts' '*.tsx' 2>/dev/null | sort -u | head -n 10
 
 # 3. 状态管理
 git grep -h "redux\|zustand\|mobx\|recoil\|jotai" -- 'package.json' 2>/dev/null
@@ -231,7 +231,7 @@ git grep -h "redux\|zustand\|mobx\|recoil\|jotai" -- 'package.json' 2>/dev/null
 git grep -h "native-base\|react-native-elements\|tamagui" -- 'package.json' 2>/dev/null
 
 # 5. Native Module 引用（Android 端）
-git grep -h "NativeModules\.\|requireNativeComponent" -- '*.tsx' '*.ts' 2>/dev/null | sort -u | head -20
+git grep -h "NativeModules\.\|requireNativeComponent" -- '*.tsx' '*.ts' 2>/dev/null | sort -u | head -n 20
 
 # 6. Native Module 实现（Android 端）
 git grep -h "ReactContextBaseJavaModule\|@ReactMethod" -- '*.java' '*.kt' 2>/dev/null | sort -u
@@ -251,16 +251,16 @@ git grep -h "Stack.Screen\|Tab.Screen\|Drawer.Screen" -- '*.tsx' '*.ts' 2>/dev/n
 
 # 3. API 调用差异
 git grep -h "from ['\"]@/services/\|from ['\"]@/api/" -- '*.tsx' '*.ts' 2>/dev/null | \
-  sed "s/.*from ['\"]//g; s/['\"].*//g" | sort | uniq -c | sort -rn | head -20
+  sed "s/.*from ['\"]//g; s/['\"].*//g" | sort | uniq -c | sort -rn | head -n 20
 
 # 4. 状态管理使用
-git grep -h "useSelector\|useDispatch\|useStore\|useRecoilState" -- '*.tsx' '*.ts' 2>/dev/null | sort -u | head -20
+git grep -h "useSelector\|useDispatch\|useStore\|useRecoilState" -- '*.tsx' '*.ts' 2>/dev/null | sort -u | head -n 20
 
 # 5. Hooks 使用
-git grep -h "useEffect\|useState\|useContext\|useQuery" -- '*.tsx' '*.ts' 2>/dev/null | sort -u | head -20
+git grep -h "useEffect\|useState\|useContext\|useQuery" -- '*.tsx' '*.ts' 2>/dev/null | sort -u | head -n 20
 
 # 6. Platform 特定代码
-git grep -rn "Platform.OS" -- '*.tsx' '*.ts' 2>/dev/null | head -20
+git grep -rn "Platform.OS" -- '*.tsx' '*.ts' 2>/dev/null | head -n 20
 ```
 
 ---
@@ -271,7 +271,7 @@ git grep -rn "Platform.OS" -- '*.tsx' '*.ts' 2>/dev/null | head -20
 
 ```bash
 # 1. Dart 源码
-git ls-files 'lib/*.dart' 'lib/**/*.dart' 2>/dev/null | head -150
+git ls-files 'lib/*.dart' 'lib/**/*.dart' 2>/dev/null | head -n 150
 
 # 2. pubspec 依赖
 cat pubspec.yaml 2>/dev/null
@@ -302,7 +302,7 @@ git grep -h "MaterialApp\|GetMaterialApp\|Navigator.push\|Get.to" -- '*.dart' 2>
 git grep -h "BlocProvider\|Provider.of\|ConsumerWidget\|StateNotifier\|GetxController" -- '*.dart' 2>/dev/null | sort -u
 
 # 3. 网络
-git grep -h "Dio\|http.get\|http.post\|GraphQLClient" -- '*.dart' 2>/dev/null | sort -u | head -20
+git grep -h "Dio\|http.get\|http.post\|GraphQLClient" -- '*.dart' 2>/dev/null | sort -u | head -n 20
 
 # 4. 持久化
 git grep -h "Hive\|sqflite\|SharedPreferences\|Isar" -- '*.dart' 2>/dev/null | sort -u
@@ -322,13 +322,13 @@ git grep -h "Navigator.push\|Get.to\|Get.off" -- '*.dart' 2>/dev/null | sort -u
 
 # 3. Widget 复用度
 git ls-files 'lib/widgets/*.dart' 2>/dev/null | \
-  xargs -I {} sh -c 'echo "{}: $(grep -l "import" {} | head -1)"' | head -20
+  xargs -I {} sh -c 'echo "{}: $(grep -l "import" {} | head -n 1)"' | head -n 20
 
 # 4. 状态管理使用
-git grep -h "BlocBuilder\|BlocConsumer\|Consumer\|GetBuilder\|Obx" -- '*.dart' 2>/dev/null | sort -u | head -20
+git grep -h "BlocBuilder\|BlocConsumer\|Consumer\|GetBuilder\|Obx" -- '*.dart' 2>/dev/null | sort -u | head -n 20
 
 # 5. 异步模式
-git grep -h "FutureBuilder\|StreamBuilder\|async\* \|await " -- '*.dart' 2>/dev/null | sort -u | head -20
+git grep -h "FutureBuilder\|StreamBuilder\|async\* \|await " -- '*.dart' 2>/dev/null | sort -u | head -n 20
 ```
 
 ---

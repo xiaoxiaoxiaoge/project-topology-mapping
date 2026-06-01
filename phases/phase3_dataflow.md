@@ -53,9 +53,9 @@ git ls-files 'main/*/http*' 'main/*/api*' 2>/dev/null
 
 ```bash
 # HTTP 客户端（RestTemplate / WebClient / OkHttp / HttpClient / axios / reqwest）
-git grep -h "RestTemplate\|WebClient\|OkHttp\|HttpClient" -- '*.java' 2>/dev/null | head -20
-git grep -h "axios\|got\|undici" -- '*.ts' '*.js' 2>/dev/null | head -20
-git grep -h "reqwest::" -- '*.rs' 2>/dev/null | head -20
+git grep -h "RestTemplate\|WebClient\|OkHttp\|HttpClient" -- '*.java' 2>/dev/null | head -n 20
+git grep -h "axios\|got\|undici" -- '*.ts' '*.js' 2>/dev/null | head -n 20
+git grep -h "reqwest::" -- '*.rs' 2>/dev/null | head -n 20
 
 # 过滤器 / 拦截器
 git ls-files 'src/**/*Filter.*' 'src/**/*Interceptor.*' 2>/dev/null
@@ -88,13 +88,13 @@ git grep -h "redux\|zustand\|mobx\|recoil\|jotai\|pinia" -- 'package.json' 2>/de
 
 ```bash
 # 缓存（Redis / Caffeine / Guava / in-memory）
-git grep -h "@Cacheable\|@CacheEvict\|StringRedisTemplate\|RedisTemplate" -- '*.java' 2>/dev/null | head -20
-git grep -h "ioredis\|cache-manager\|node-cache" -- '*.ts' '*.js' 2>/dev/null | head -20
-git grep -h "redis::\|Arc<.*Cache\|Mutex<" -- '*.rs' 2>/dev/null | head -20
+git grep -h "@Cacheable\|@CacheEvict\|StringRedisTemplate\|RedisTemplate" -- '*.java' 2>/dev/null | head -n 20
+git grep -h "ioredis\|cache-manager\|node-cache" -- '*.ts' '*.js' 2>/dev/null | head -n 20
+git grep -h "redis::\|Arc<.*Cache\|Mutex<" -- '*.rs' 2>/dev/null | head -n 20
 
 # 会话管理
-git grep -h "HttpSession\|@SessionAttribute\|session\|Cookie" -- '*.java' 2>/dev/null | head -20
-git grep -h "express-session\|@nestjs/jwt\|passport" -- '*.ts' '*.js' 2>/dev/null | head -20
+git grep -h "HttpSession\|@SessionAttribute\|session\|Cookie" -- '*.java' 2>/dev/null | head -n 20
+git grep -h "express-session\|@nestjs/jwt\|passport" -- '*.ts' '*.js' 2>/dev/null | head -n 20
 ```
 
 ### 重点提取
@@ -122,9 +122,9 @@ git ls-files 'src/**/*SecurityConfig.*' 'src/**/*ShiroConfig.*' 'src/**/*WebSecu
 git ls-files 'src/**/*Auth*' 'src/**/*Jwt*' 2>/dev/null
 
 # 中间件链
-git grep -h "FilterChain\|doFilter\|@PreAuthorize\|@Secured" -- '*.java' 2>/dev/null | head -20
-git grep -h "AddAuthentication\|AddAuthorization\|\[Authorize\]" -- '*.cs' 2>/dev/null | head -20
-git grep -h "middleware\|UseMiddleware\|from_fn" -- '*.rs' '*.go' '*.ts' '*.js' 2>/dev/null | head -20
+git grep -h "FilterChain\|doFilter\|@PreAuthorize\|@Secured" -- '*.java' 2>/dev/null | head -n 20
+git grep -h "AddAuthentication\|AddAuthorization\|\[Authorize\]" -- '*.cs' 2>/dev/null | head -n 20
+git grep -h "middleware\|UseMiddleware\|from_fn" -- '*.rs' '*.go' '*.ts' '*.js' 2>/dev/null | head -n 20
 ```
 
 ### 重点提取
@@ -159,15 +159,15 @@ cat src/pages/xxx/list.tsx 2>/dev/null
 # 分析一个表单提交页
 cat src/pages/xxx/create.tsx 2>/dev/null
 
-# 高度/极度差异：必须逐个分析所有子模块
-cat src/pages/trace/file-flow/list.tsx 2>/dev/null
-cat src/pages/trace/pc-screen/list.tsx 2>/dev/null
-cat src/pages/trace/Video/list.tsx 2>/dev/null
+# 高度/极度差异：必须逐个分析所有子模块（占位符）
+cat src/pages/<module>/<submodule-1>/list.tsx 2>/dev/null
+cat src/pages/<module>/<submodule-2>/list.tsx 2>/dev/null
+cat src/pages/<module>/<submodule-3>/list.tsx 2>/dev/null
 
 # 后端
-cat src/main/java/com/example/controller/xxxController.java 2>/dev/null
-cat src/main/java/com/example/controller/FileFlowController.java 2>/dev/null
-cat src/main/java/com/example/controller/PcScreenController.java 2>/dev/null
+cat src/main/java/com/example/controller/<Name1>Controller.java 2>/dev/null
+cat src/main/java/com/example/controller/<Name2>Controller.java 2>/dev/null
+cat src/main/java/com/example/controller/<Name3>Controller.java 2>/dev/null
 ```
 
 ### 3.4.3 差异表（极度差异时必须生成）
@@ -180,12 +180,12 @@ cat src/main/java/com/example/controller/PcScreenController.java 2>/dev/null
 
 ```bash
 # 前端
-git grep -h "WaterMarkEnum\|watermarkType" -- '*.ts' '*.tsx' 2>/dev/null | head -20
+git grep -h "WaterMarkEnum\|watermarkType" -- '*.ts' '*.tsx' 2>/dev/null | head -n 20
 
 # 后端
 git grep -h "import\|@Autowired\|@Inject" -- '*.java' 2>/dev/null | \
   grep "com\.example\." | sed 's/.*import //g; s/;//g' | \
-  sort | uniq -c | sort -rn | head -30
+  sort | uniq -c | sort -rn | head -n 30
 ```
 
 ---
@@ -240,70 +240,70 @@ git grep -h "url: ['\"]\/api\/" -- 'src/services/*.ts' 2>/dev/null | \
 
 ```bash
 # 搜索后端 Controller 中的路由映射
-git grep -h "@RequestMapping\|@GetMapping\|@PostMapping" -- '*.java' 2>/dev/null | head -30
+git grep -h "@RequestMapping\|@GetMapping\|@PostMapping" -- '*.java' 2>/dev/null | head -n 30
 ```
 
-**步骤 3：构建定位速查表**
+**步骤 3：构建定位速查表（占位符版）**
 
 ```markdown
 ### 前后端定位速查表
 
 | 前端页面/功能 | 前端文件 | 调用 API 路径 | 主服务 | 涉及微服务 | 后端关键文件 |
 |-------------|---------|--------------|--------|-----------|------------|
-| 取证列表 | pages/trace/*/list.tsx | /api/forensicService/v1/getList | gw-forensic-service | - | GwForensicController.java |
-| 文档水印嵌入 | pages/middleware/word/* | /api/docWatermark/v1/embedFileWM | gw-biz-service | gw-docsy-service | GwDocWatermarkController.java |
-| 图片水印嵌入 | pages/middleware/picture/* | /api/picWatermark/v1/embedPicWM | gw-biz-service | gw-picsy-service | GwPicWatermarkController.java |
+| <功能 1> | <pages/.../index.tsx> | <API-PATH-1> | <SERVICE-A> | <SERVICE-B>, <SERVICE-C> | <ControllerName.java> |
+| <功能 2> | <pages/.../index.tsx> | <API-PATH-2> | <SERVICE-A> | - | <ControllerName.java> |
+| <功能 3> | <pages/.../index.tsx> | <API-PATH-3> | <SERVICE-D> | <SERVICE-A> | <ControllerName.java> |
 ```
+
+> **占位符说明：** 实际项目里把 `<API-PATH-1>`、`<SERVICE-A>` 等替换成项目真实值。**不要直接复制示例。**
 
 ### 3.7.2 定位速查表用途
 
 | 场景 | 如何使用速查表 |
 |-----|---------------|
-| 修改取证功能 | 查找 "forensicService" → 定位到 gw-forensic-service |
-| 修改水印嵌入 | 查找 "watermark" → 定位到 gw-biz-service + 对应 Go 服务 |
-| 排查认证问题 | 查找 "oauth" → 定位到 gw-iam-service |
-| 定位涉及服务 | 查看"涉及微服务"列 → 了解完整调用链路 |
+| 修改某功能 | 查找 API 路径关键字 → 定位到对应 Controller |
+| 修改某页面 | 查找前端文件 → 查看它调用的所有 API |
+| 排查问题 | 查找"涉及微服务"列 → 了解完整调用链路 |
+| 新人上手 | 通读速查表 → 5 分钟建立全局认知 |
 
-### 3.7.3 微服务定位规则（参考示例）
+### 3.7.3 微服务定位规则（占位符版）
 
-**按 API 路径前缀定位：**
-```
-/api/forensicService/*     → gw-forensic-service
-/api/docWatermark/*        → gw-biz-service
-/api/picWatermark/*        → gw-biz-service
-/api/videoWatermark/*      → gw-biz-service
-/api/traceability/*        → gw-biz-service
-/api/oauth/*               → gw-iam-service
-/api/clientService/*       → gw-biz-service
-/api/license/*             → gw-license-manage-service
+> **⚠️ 这只是模板，不是真实规则。** 实际项目需根据 [types/backend.md § 服务名交叉验证](../types/backend.md#服务名交叉验证) 进行**真实交叉验证**后才能确定归属。
+
+**按 API 路径前缀定位（请替换为项目实际值）：**
+
+```markdown
+| API 路径前缀 | 主服务 | 备注 |
+|------------|--------|------|
+| /api/<module-a>/* | <SERVICE-A> | <功能描述> |
+| /api/<module-b>/* | <SERVICE-B> | <功能描述> |
+| /api/<module-c>/* | <SERVICE-C> | <功能描述> |
 ```
 
 **按功能领域定位：**
+
+```markdown
+| 功能领域 | 主服务 | 涉及的下游服务 |
+|---------|--------|---------------|
+| <领域 1> | <SERVICE-A> | <SERVICE-D>, <SERVICE-E> |
+| <领域 2> | <SERVICE-B> | <SERVICE-F> |
+| <领域 3> | <SERVICE-C> | - |
+| 用户/认证/权限 | <AUTH-SERVICE> | - |
+| API 网关 | <GATEWAY-SERVICE> | 所有上述服务 |
 ```
-取证流程        → gw-forensic-service
-水印嵌入        → gw-biz-service (+ Go 算法服务)
-/goofysy/docsy  → gw-docsy-service (Go)
-/goofysy/picsy  → gw-picsy-service (Go)
-/goofysy/videosy → gw-videosy-service (Go)
-用户/认证/权限  → gw-iam-service
-API 网关        → gw-gateway-service
-```
 
-> **⚠️ 这是参考示例，不是规则。** 实际项目需根据 `types/backend.md § 服务名交叉验证` 进行**真实交叉验证**后才能确定归属。
-
-### 3.7.4 完整调用链路示例
+### 3.7.4 完整调用链路示例（占位符版）
 
 ```
-取证流程调用链：
-前端 → gw-gateway-service → gw-forensic-service →
-  ├→ gw-biz-service (溯源对象)
-  ├→ gw-docsy-service (文档算法 Go)
-  ├→ gw-picsy-service (图片算法 Go)
-  └→ gw-videosy-service (视频算法 Go)
+<场景 1>调用链：
+前端 → <GATEWAY-SERVICE> → <SERVICE-A> →
+  ├→ <SERVICE-D> (<子流程 1>)
+  ├→ <SERVICE-E> (<子流程 2>)
+  └→ <SERVICE-F> (<子流程 3>)
 
-水印嵌入调用链：
-前端 → gw-gateway-service → gw-biz-service →
-  ├→ gw-docsy-service (PDF/OFD/Office)
-  ├→ gw-picsy-service (图片)
-  └→ gw-videosy-service (视频)
+<场景 2>调用链：
+前端 → <GATEWAY-SERVICE> → <SERVICE-B> →
+  ├→ <SERVICE-G> (<子流程 4>)
+  ├→ <SERVICE-H> (<子流程 5>)
+  └→ <SERVICE-I> (<子流程 6>)
 ```

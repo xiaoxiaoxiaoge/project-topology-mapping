@@ -4,7 +4,7 @@
 
 ```bash
 # 1. 目录深度分析（使用4层深度）
-find src -maxdepth 4 -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \) 2>/dev/null | head -150
+find src -maxdepth 4 -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \) 2>/dev/null | head -n 150
 
 # 2. 一级目录
 find src -maxdepth 1 -type d | sort
@@ -28,13 +28,30 @@ find src/hooks -maxdepth 1 -type f -name "*.ts" | sort
 # 8. store 目录
 find src/store -maxdepth 1 -type f -name "*.ts" | sort
 
-# 9. router modules
+# 9. router modules (Ant Design Pro 风格)
 ls src/router/modules/*.tsx 2>/dev/null | wc -l
 ls src/router/modules/*.tsx 2>/dev/null
 
+# 9.1 router 入口文件（通用）
+git ls-files 'src/router/index.*' 'src/router/routes.*' 'src/App.tsx' 'src/App.jsx' 2>/dev/null
+
 # 10. package.json 分析
-cat package.json 2>/dev/null | head -40
+cat package.json 2>/dev/null | head -n 40
 ```
+
+> **路由发现策略（按项目类型分支）：**
+>
+> | 项目风格 | 路由位置 | 检测命令 |
+> |---------|---------|---------|
+> | **Ant Design Pro** | `src/router/modules/*.tsx` | `ls src/router/modules/*.tsx` |
+> | **纯 React Router** | `src/router/index.tsx` + `<Route>` 列表 | `git grep -h "<Route" -- 'src/router/index.*' 2>/dev/null` |
+> | **Next.js** | `pages/*.tsx` 或 `app/*.tsx` (App Router) | `git ls-files 'pages/*.tsx' 'app/*.tsx' 2>/dev/null` |
+> | **Nuxt** | `pages/*.vue` | `git ls-files 'pages/*.vue' 2>/dev/null` |
+> | **Vue Router (默认)** | `src/router/index.ts` + 路由数组 | `git ls-files 'src/router/index.*' 2>/dev/null` |
+> | **Remix** | `app/routes/*.tsx` | `git ls-files 'app/routes/*.tsx' 2>/dev/null` |
+> | **SvelteKit** | `src/routes/*.svelte` | `git ls-files 'src/routes/*.svelte' 2>/dev/null` |
+>
+> **检测步骤：** 先看 package.json 的依赖判断框架（react-router/next/nuxt/sveltekit/remix），再选对应命令。
 
 ## 页面模块检测
 
@@ -71,7 +88,7 @@ grep -rh "from ['\"]@/hooks/" --include="*.tsx" --include="*.ts" src/ 2>/dev/nul
 # 4. services 被引用情况
 grep -rh "from ['\"]@/services/" --include="*.tsx" --include="*.ts" src/ 2>/dev/null | \
   sed "s/.*from ['\"]@\/services\///g; s/['\"].*//g" | \
-  sort | uniq -c | sort -rn | head -30
+  sort | uniq -c | sort -rn | head -n 30
 
 # 5. router modules 数量
 ls src/router/modules/*.tsx 2>/dev/null | wc -l
@@ -100,7 +117,7 @@ git grep -h "ImgCrop\|ImgRotate\|ImgCorrect\|ImgExtract\|DocExtract" \
   -- 'src/pages/<module>/*/trace.tsx' 2>/dev/null | sort | uniq -c | sort -rn
 
 # 5. 检查枚举或常量定义映射到不同子模块
-git grep -h "WaterMarkEnum\|watermarkType" -- 'src/pages/<module>/*.{ts,tsx}' 2>/dev/null | head -20
+git grep -h "WaterMarkEnum\|watermarkType" -- 'src/pages/<module>/*.{ts,tsx}' 2>/dev/null | head -n 20
 
 # 6. API 调用差异（不同子模块调用的 services 是否不同）
 git grep -h "from ['\"]@/services/" -- 'src/pages/<module>/*/list.tsx' 2>/dev/null | \

@@ -2,7 +2,7 @@
 
 **⚠️ 重要警告：这是最容易被遗漏的检查点**
 
-当项目中有**多个相似名称的子模块**时（如 `trace/file-flow`、`trace/word`、`trace/Picture`），即使它们看起来结构相似，**内部逻辑可能完全不同**。必须显式识别，否则 AI 会假设"所有子模块逻辑相同"导致后续修改出错。
+当项目中有**多个相似名称的子模块**时（如 `<module>/<submodule-1>`、`<module>/<submodule-2>`、`<module>/<submodule-3>`），即使它们看起来结构相似，**内部逻辑可能完全不同**。必须显式识别，否则 AI 会假设"所有子模块逻辑相同"导致后续修改出错。
 
 > 前置：阶段 6 校验全绿。
 > 后置：本 skill 执行完毕。
@@ -188,8 +188,8 @@ grep -rh "#\[tauri::command\]" src-tauri/src/ 2>/dev/null
 
 | 控制器 | 路径 | 主要方法 | 业务逻辑差异 |
 |--------|------|---------|-------------|
-| FileFlowController | /api/file-flow | postUpload, getDocExtract | 文档服务器端解析 |
-| PcScreenController | /api/pc-screen | postCrop, getRotate | 屏幕区域裁剪，5 步流程 |
+| <Controller-1> | /api/<module-1> | <method-1>, <method-2> | <差异说明> |
+| <Controller-2> | /api/<module-2> | <method-3>, <method-4> | <差异说明> |
 | ... | ... | ... | ... |
 ```
 

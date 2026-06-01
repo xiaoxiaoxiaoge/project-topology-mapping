@@ -11,6 +11,46 @@ description: 在开始编码前生成项目的完整、持久化结构图（含�
 
 ---
 
+## ⚠️ 前置要求（必读）
+
+### 1. 工作目录
+
+**所有命令假设你在被扫描项目的 git 根目录执行。**
+
+```bash
+# 验证当前是不是项目根
+cd <your-project>           # 先 cd 进去
+git rev-parse --show-toplevel  # 应该输出 <your-project> 绝对路径
+```
+
+如果不是 git 仓库（罕见），需要先 `git init` 或手动 cd 到项目根。
+
+> **如果工作目录不对，命令会找不到文件或产生错误结果。**
+
+### 2. 推荐运行环境
+
+| 平台 | 推荐 Shell | 备注 |
+|------|----------|------|
+| macOS / Linux | `bash` / `zsh` | 原生支持 |
+| Windows | **Git Bash** 或 **WSL** | **强烈推荐** |
+| Windows (备选) | PowerShell 7+ | 见下方映射表 |
+
+> **Windows 原生 PowerShell 默认无 `head` / `tail` / `find` 等命令。** 强烈建议安装 [Git for Windows](https://git-scm.com/download/win) 后使用 **Git Bash**，或在 WSL 下运行。
+
+### 3. 跨平台命令映射（速查）
+
+| 用途 | Git Bash / WSL | PowerShell |
+|------|---------------|-----------|
+| 取前 N 行 | `head -n N` | `Select-Object -First N` |
+| 取后 N 行 | `tail -n N` | `Select-Object -Last N` |
+| 计数 | `wc -l` | `(Get-Content x \| Measure-Object -Line).Lines` |
+| 递归找文件 | `find . -name "*.java"` | `Get-ChildItem -Recurse -Filter *.java` |
+| 文本搜索 | `grep -r "X" --include="*.java"` | `Select-String -Path "*.java" -Pattern "X" -Recurse` |
+
+> **本 skill 优先使用 `git ls-files` / `git grep` 等 Git 原生命令**，所有平台（macOS/Linux/Windows Git Bash/WSL）都自带 Git，跨平台一致性最好。
+
+---
+
 ## 🎯 何时使用 / 不使用
 
 ### ✅ 应该使用

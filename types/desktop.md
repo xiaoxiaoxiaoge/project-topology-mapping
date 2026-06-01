@@ -10,28 +10,28 @@
 ```bash
 # Electron
 ls -la package.json 2>/dev/null
-git grep -h "electron\b" -- 'package.json' 2>/dev/null | head -3
+git grep -h "electron\b" -- 'package.json' 2>/dev/null | head -n 3
 ls -la main.js main.ts electron.js 2>/dev/null
 
 # Tauri
 ls -la src-tauri/ tauri.conf.json 2>/dev/null
-cat src-tauri/Cargo.toml 2>/dev/null | head -20
+cat src-tauri/Cargo.toml 2>/dev/null | head -n 20
 
 # Flutter Desktop
 ls -la pubspec.yaml 2>/dev/null
-git grep -h "flutter:" -- 'pubspec.yaml' 2>/dev/null | head -3
-git grep -h "desktop:" -- 'pubspec.yaml' 2>/dev/null | head -3
+git grep -h "flutter:" -- 'pubspec.yaml' 2>/dev/null | head -n 3
+git grep -h "desktop:" -- 'pubspec.yaml' 2>/dev/null | head -n 3
 
 # Qt (C++)
 ls -la *.pro CMakeLists.txt *.qrc 2>/dev/null
 
 # WPF / WinForms (.NET)
 ls -la *.csproj *.sln 2>/dev/null
-git ls-files '*.xaml' 2>/dev/null | head -5
+git ls-files '*.xaml' 2>/dev/null | head -n 5
 
 # Wails (Go + Web)
 ls -la wails.json go.mod 2>/dev/null
-git ls-files 'frontend/*' 2>/dev/null | head -5
+git ls-files 'frontend/*' 2>/dev/null | head -n 5
 ```
 
 | 特征文件 | 项目类型 |
@@ -52,16 +52,16 @@ git ls-files 'frontend/*' 2>/dev/null | head -5
 ```bash
 # 1. main 进程入口
 ls main.js main.ts electron.js electron-main.js 2>/dev/null
-git ls-files 'main/*' 'electron/*' 2>/dev/null | head -20
+git ls-files 'main/*' 'electron/*' 2>/dev/null | head -n 20
 
 # 2. renderer 进程
-git ls-files 'renderer/*' 'src/renderer/*' 'src/*' 2>/dev/null | head -100
+git ls-files 'renderer/*' 'src/renderer/*' 'src/*' 2>/dev/null | head -n 100
 
 # 3. preload 脚本
 git ls-files 'preload*' 'src/preload/*' 2>/dev/null
 
 # 4. 配置
-cat package.json 2>/dev/null | head -50
+cat package.json 2>/dev/null | head -n 50
 ls electron-builder.yml electron-forge.config.js 2>/dev/null
 
 # 5. 资源
@@ -75,7 +75,7 @@ git ls-files 'package.json' 'electron-builder*' 'electron-forge*' 2>/dev/null
 
 ```bash
 # 1. 进程模型
-git grep -h "BrowserWindow\|app.whenReady\|app.on" -- 'main/*' 'main.js' 'main.ts' 2>/dev/null | head -20
+git grep -h "BrowserWindow\|app.whenReady\|app.on" -- 'main/*' 'main.js' 'main.ts' 2>/dev/null | head -n 20
 
 # 2. IPC 通道（Main 端）
 git grep -h "ipcMain\.handle\|ipcMain\.on(" -- 'main/*' '*.js' '*.ts' 2>/dev/null
@@ -88,7 +88,7 @@ git ls-files 'preload*' 2>/dev/null
 git grep -h "contextBridge\.exposeInMainWorld" -- 'preload*' 2>/dev/null
 
 # 5. 窗口管理
-git grep -h "new BrowserWindow\|loadFile\|loadURL" -- 'main/*' '*.js' '*.ts' 2>/dev/null | head -20
+git grep -h "new BrowserWindow\|loadFile\|loadURL" -- 'main/*' '*.js' '*.ts' 2>/dev/null | head -n 20
 
 # 6. 菜单 / 托盘
 git grep -h "Menu\.buildFromTemplate\|Tray\|nativeImage" -- 'main/*' '*.js' '*.ts' 2>/dev/null
@@ -107,7 +107,7 @@ git grep -h "registerFileProtocol\|setAsDefaultProtocolClient" -- 'main/*' 2>/de
 
 ```bash
 # 1. Main 端网络请求（通常在主进程或 worker）
-git grep -h "fetch\|axios\|http\." -- 'main/*' 2>/dev/null | head -20
+git grep -h "fetch\|axios\|http\." -- 'main/*' 2>/dev/null | head -n 20
 
 # 2. 渲染端 → 主端 → 后端 典型链路
 git grep -h "ipcRenderer\.invoke" -- 'src/*' 2>/dev/null
@@ -127,7 +127,7 @@ git grep -h "new BrowserWindow" -- 'main/*' 2>/dev/null
 git grep -B1 -A1 "new BrowserWindow" -- 'main/*' 2>/dev/null
 
 # 3. 菜单项
-git grep -h "label:" -- 'main/*' 2>/dev/null | head -30
+git grep -h "label:" -- 'main/*' 2>/dev/null | head -n 30
 
 # 4. IPC handler 数量
 git grep -c "ipcMain\.handle" -- 'main/*' 2>/dev/null
@@ -136,7 +136,7 @@ git grep -c "ipcMain\.handle" -- 'main/*' 2>/dev/null
 git grep -c "contextBridge\.exposeInMainWorld" -- 'preload*' 2>/dev/null
 
 # 6. 不同进程的依赖
-git grep -h "from ['\"]electron" -- 'main/*' 'src/*' 2>/dev/null | sort -u | head -20
+git grep -h "from ['\"]electron" -- 'main/*' 'src/*' 2>/dev/null | sort -u | head -n 20
 ```
 
 ### 阶段 7 检查
@@ -155,11 +155,11 @@ git grep -l "ipcRenderer\|document\." -- 'src/*' 'renderer/*' 2>/dev/null
 
 ```bash
 # 1. Rust 端源码
-git ls-files 'src-tauri/src/*.rs' 2>/dev/null | head -50
+git ls-files 'src-tauri/src/*.rs' 2>/dev/null | head -n 50
 
 # 2. 前端源码
-git ls-files 'src/*' 2>/dev/null | head -100
-git ls-files 'dist/*' 'build/*' 2>/dev/null | head -20
+git ls-files 'src/*' 2>/dev/null | head -n 100
+git ls-files 'dist/*' 'build/*' 2>/dev/null | head -n 20
 
 # 3. 配置
 cat src-tauri/tauri.conf.json 2>/dev/null
@@ -174,23 +174,23 @@ git grep -h "#\[tauri::command\]" -- 'src-tauri/src/*.rs' 2>/dev/null
 ```bash
 # 1. Tauri 命令（Rust 端）
 git grep -B1 "fn " -- 'src-tauri/src/*.rs' 2>/dev/null | \
-  grep -A1 "tauri::command" | head -30
+  grep -A1 "tauri::command" | head -n 30
 
 # 2. 前端调用 Tauri
-git grep -h "invoke(" -- 'src/*' 2>/dev/null | head -20
+git grep -h "invoke(" -- 'src/*' 2>/dev/null | head -n 20
 
 # 3. 事件系统
-git grep -h "emit\|listen" -- 'src-tauri/src/*.rs' 'src/*' 2>/dev/null | head -20
+git grep -h "emit\|listen" -- 'src-tauri/src/*.rs' 'src/*' 2>/dev/null | head -n 20
 
 # 4. 窗口管理
-git grep -h "WindowBuilder\|window\.set_title\|window\." -- 'src-tauri/src/*.rs' 2>/dev/null | head -20
+git grep -h "WindowBuilder\|window\.set_title\|window\." -- 'src-tauri/src/*.rs' 2>/dev/null | head -n 20
 
 # 5. 状态管理插件
 git grep -h "tauri-plugin-" -- 'src-tauri/Cargo.toml' 2>/dev/null
 
 # 6. 系统集成
 git grep -h "tauri::api::path\|tauri::api::dialog\|tauri::api::shell" \
-  -- 'src-tauri/src/*.rs' 2>/dev/null | head -20
+  -- 'src-tauri/src/*.rs' 2>/dev/null | head -n 20
 ```
 
 ### 差异点检测
@@ -201,7 +201,7 @@ git grep -A1 "#\[tauri::command\]" -- 'src-tauri/src/*.rs' 2>/dev/null | \
   grep "pub fn\|pub async fn" | sort -u
 
 # 2. 前端 invoke 调用方
-git grep -h "invoke(['\"]" -- 'src/*' 2>/dev/null | sort -u | head -20
+git grep -h "invoke(['\"]" -- 'src/*' 2>/dev/null | sort -u | head -n 20
 
 # 3. Rust 端与前端的依赖关系
 git ls-files 'src-tauri/src/*.rs' 2>/dev/null
@@ -227,7 +227,7 @@ git grep -h "Platform.isWindows\|Platform.isMacOS\|Platform.isLinux" -- 'lib/*.d
 git grep -h "WindowManager\|windowManager" -- 'lib/*.dart' 2>/dev/null
 
 # 4. 系统集成
-git grep -h "dart:io\|Process\.run\|File\(" -- 'lib/*.dart' 2>/dev/null | sort -u | head -20
+git grep -h "dart:io\|Process\.run\|File\(" -- 'lib/*.dart' 2>/dev/null | sort -u | head -n 20
 
 # 5. 菜单 / 托盘
 git grep -h "MenuBar\|SystemTray" -- 'lib/*.dart' 2>/dev/null
@@ -244,13 +244,13 @@ git grep -h "MenuBar\|SystemTray" -- 'lib/*.dart' 2>/dev/null
 cat *.pro CMakeLists.txt 2>/dev/null
 
 # 2. 头文件 / 源文件
-git ls-files '*.h' '*.hpp' '*.cpp' 2>/dev/null | head -50
+git ls-files '*.h' '*.hpp' '*.cpp' 2>/dev/null | head -n 50
 
 # 3. UI 文件
 git ls-files '*.ui' '*.qrc' 2>/dev/null
 
 # 4. 信号槽
-git grep -h "connect(\|Q_OBJECT\|signals:" -- '*.cpp' '*.h' 2>/dev/null | head -20
+git grep -h "connect(\|Q_OBJECT\|signals:" -- '*.cpp' '*.h' 2>/dev/null | head -n 20
 
 # 5. QML
 git ls-files '*.qml' 2>/dev/null
@@ -266,10 +266,10 @@ git ls-files '*.xaml' 2>/dev/null
 git ls-files '*ViewModel.cs' 'ViewModels/*' 2>/dev/null
 
 # 3. 命令
-git grep -h "ICommand\|RelayCommand" -- '*.cs' 2>/dev/null | head -20
+git grep -h "ICommand\|RelayCommand" -- '*.cs' 2>/dev/null | head -n 20
 
 # 4. 数据绑定
-git grep -h "{Binding" -- '*.xaml' 2>/dev/null | head -20
+git grep -h "{Binding" -- '*.xaml' 2>/dev/null | head -n 20
 ```
 
 ### Wails (Go + Web)
@@ -279,7 +279,7 @@ git grep -h "{Binding" -- '*.xaml' 2>/dev/null | head -20
 cat main.go app.go 2>/dev/null
 
 # 2. Wails 绑定方法
-git grep -h "func.*ctx context\.Context" -- '*.go' 2>/dev/null | head -20
+git grep -h "func.*ctx context\.Context" -- '*.go' 2>/dev/null | head -n 20
 
 # 3. 前端
 git ls-files 'frontend/*' 2>/dev/null

@@ -42,8 +42,8 @@ git grep -h "@Transactional" -- '*.java' 2>/dev/null | sort -u
 git grep -h "@ExceptionHandler\|@ControllerAdvice\|@RestControllerAdvice" -- '*.java' 2>/dev/null
 
 # 6. 读取 2-3 个关键 Controller 完整内容
-cat src/.../GwForensicController.java
-cat src/.../GwDocWatermarkController.java
+cat src/main/java/com/example/controller/<Name1>Controller.java
+cat src/main/java/com/example/controller/<Name2>Controller.java
 ```
 
 ### Go 项目必须扫描的内容
@@ -54,7 +54,7 @@ find . -type f \( -name "*handler*.go" -o -name "*controller*.go" \) -not -path 
 
 # 2. 路由定义
 git grep -h "r\.Get\|r\.Post\|r\.Put\|r\.Delete\|r\.Group" -- '*.go' 2>/dev/null \
-  | grep -v vendor | head -50
+  | grep -v vendor | head -n 50
 
 # 3. Middleware 链
 git grep -h "Use\|Middleware\|func.*Middleware" -- '*.go' 2>/dev/null | grep -v vendor
@@ -166,7 +166,7 @@ git grep -h "from ['\"]@/hooks/" -- '*.tsx' '*.ts' 2>/dev/null | \
 
 # 4. services 被引用情况
 git grep -h "from ['\"]@/services/" -- '*.tsx' '*.ts' 2>/dev/null | \
-  sed "s/.*from ['\"]@\/services\///g; s/['\"].*//g" | sort | uniq -c | sort -rn | head -30
+  sed "s/.*from ['\"]@\/services\///g; s/['\"].*//g" | sort | uniq -c | sort -rn | head -n 30
 
 # 5. router modules 数量
 ls src/router/modules/*.tsx 2>/dev/null | wc -l
@@ -184,7 +184,7 @@ ls -la src/router/ src/router/modules/ 2>/dev/null
 ls src/router/modules/*.tsx 2>/dev/null
 
 # 3. package.json 分析
-head -40 package.json
+head -n 40 package.json
 ```
 
 ---

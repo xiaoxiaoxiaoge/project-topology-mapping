@@ -35,7 +35,7 @@ find entry/src/main/resources -maxdepth 2 -type d | sort 2>/dev/null
 grep -rh "^import " --include="*.ets" entry/src/main/ets/ 2>/dev/null | \
   grep "from ['\"]" | \
   sed "s/.*from ['\"]\.\.?\//\//g; s/['\"]//g" | \
-  sort | uniq -c | sort -rn | head -50
+  sort | uniq -c | sort -rn | head -n 50
 
 # 10. Native 模块依赖检测（lib*.so）
 grep -rh "lib.*\.so" --include="*.ets" entry/src/main/ets/ 2>/dev/null

@@ -118,7 +118,7 @@
 微服务架构中常见"命名相似实则不同"陷阱：
 
 - Java `@FeignClient` 的 `name` 值
-- 服务名常量定义（如 `GwServiceNameConstant`）
+- 服务名常量定义（如 `<ServiceNameConstant>`）
 - Go 服务的 Eureka 注册名 / Node 服务的 `server_name`
 
 **三重交叉验证**，防止误判服务归属。
@@ -279,10 +279,10 @@ git clone https://gitee.com/xiaoxiaoxiaoge/project-topology-mapping.git `
 ⚠️ 最易遗漏的检查点
 
 同类模块 ≠ 逻辑相同
-├── trace/file-flow: 2 步流程
-├── trace/pc-screen: 5 步流程
-├── trace/word: 文档解析专属流程
-└── trace/video: 视频处理专属流程
+├── <module>/<submodule-1>: 2 步流程
+├── <module>/<submodule-2>: 5 步流程
+├── <module>/<submodule-3>: 文档解析专属流程
+└── <module>/<submodule-4>: 视频处理专属流程
 
 生成模块差异矩阵
 | 子模块 | 步骤数 | config.ts | 核心组件 | 差异原因 |
@@ -349,7 +349,7 @@ project-topology-mapping/
          .project-topology-frontend.md
          .project-topology-backend.md
 记忆文件: ~/.claude/memory/projects/my-project.md
-模块差异: trace/file-flow 与 trace/pc-screen 步骤数差异大
+模块差异: <submodule-1> 与 <submodule-2> 步骤数差异大
 下一步: 可以基于此拓扑开始实现
 ```
 
