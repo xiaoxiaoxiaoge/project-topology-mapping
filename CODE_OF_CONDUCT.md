@@ -37,7 +37,7 @@
 
 不当行为可以通过以下方式举报给项目团队：
 - GitHub Issue（标记为 @www_mao_com）
-- 邮件：<your-email@example.com>
+- 邮件：<2809782050@qq.com>
 
 所有投诉都会被审查和调查，并将根据情况作出必要回应。
 

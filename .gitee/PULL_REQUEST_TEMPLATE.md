@@ -30,14 +30,13 @@
 - [ ] 改动 1
 - [ ] 改动 2
 
-## 自测清单
+## 自测清单（精简）
 
 - [ ] 我在自己的环境跑通了
-- [ ] 我加了 / 更新了相关文档
-- [ ] 我加了 / 更新了相关测试
-- [ ] 我更新了 CHANGELOG.md
-- [ ] 我没引入跨平台不兼容命令
+- [ ] 我没引入跨平台不兼容命令（`head` / `tail` / `wc -l` 在 PowerShell 不存在）
 - [ ] 我没破坏 single source of truth 原则
+
+> 📖 完整 checklist（含"更新文档/CHANGELOG/加测试"等）见 [CONTRIBUTING.md § 开发流程](../CONTRIBUTING.md#开发流程)
 
 ## 截图 / 录屏
 

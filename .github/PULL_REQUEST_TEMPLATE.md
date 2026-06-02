@@ -21,14 +21,13 @@ Thanks for your contribution! 🎉
 
 Brief description.
 
-## Checklist
+## Checklist (core)
 
 - [ ] Tested in my own environment
-- [ ] Documentation updated
-- [ ] Tests added/updated
-- [ ] CHANGELOG.md updated
-- [ ] No cross-platform incompatible commands introduced
+- [ ] No cross-platform incompatible commands introduced (`head` / `tail` / `wc -l` don't exist in PowerShell)
 - [ ] Single source of truth principle preserved
+
+> 📖 Full checklist (docs/CHANGELOG/tests) see [CONTRIBUTING.md § Development Workflow](../CONTRIBUTING.md#development-workflow)
 
 ## Screenshots / Recordings
 

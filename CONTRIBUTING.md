@@ -189,6 +189,22 @@ project-topology-mapping/
 - **章节**: 数字编号（`2.1`, `2.2.3`）
 - **变量占位符**: `<尖括号>`（如 `<project-name>`）
 
+### 常见拼写陷阱
+
+下列名称**不能拼错**，会被脚本化查找遗漏：
+
+| 正确 | 错误 | 影响 |
+|------|------|------|
+| `types/harmonyos.md` | `harmondys.md` / `harmony_os.md` / `HarmonyOS.md` | 引用方会找不到 |
+| `types/frontend.md` | `front-end.md` / `frontEnd.md` | 同上 |
+| `types/backend.md` | `back-end.md` / `backEnd.md` | 同上 |
+| `phases/phase1_detection.md` | `Phase1.md` / `phase_1.md` / `phase-1.md` | 同上 |
+| `templates/backend_output.md` | `back-end_output.md` | 同上 |
+| `.gitee/ISSUE_TEMPLATE/` | `ISSUE_TEMPLATES/` / `issue_template/` | 码云不识别 |
+| `.project-topology.md` | `ProjectTopology.md` / `project_topology.md` | 跨脚本不一致 |
+
+**所有名称采用全小写 + 下划线/连字符**，不混用驼峰。
+
 ### Markdown 风格
 
 - ATX 标题（`#` 而非 `===`）
@@ -208,9 +224,10 @@ project-topology-mapping/
 
 ## 社区
 
-- 💬 讨论：[Discussion 区](https://gitee.com/www_mao_com/project-topology-mapping/issues)
-- 📧 邮件：<your-email@example.com>
-- 🐛 Bug 报告：[GitHub Issues](https://gitee.com/www_mao_com/project-topology-mapping/issues)
+- 💬 讨论：[Issues 讨论区](https://gitee.com/www_mao_com/project-topology-mapping/issues)
+  - 当前仓库使用 Issues 板块进行公开讨论。如果将来启用 Gitee Discussions，会在此链接更新。
+- 📧 邮件：<2809782050@qq.com>
+- 🐛 Bug 报告：[Gitee Issues](https://gitee.com/www_mao_com/project-topology-mapping/issues)
 
 ---
 
