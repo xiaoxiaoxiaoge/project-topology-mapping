@@ -1,9 +1,9 @@
-git grep -E -h "|# 阶段 1: 项目类型检测
+# 阶段 1: 项目类型检测
 
 **必须首先执行！不同项目类型使用不同的检测命令，不能用前端命令检测后端代码。**
 
 > 前置：无。
-> 后置：进入 [阶段 2: 结构扫描](./phase2_structure.md)
+> 后置：进入 [阶段 2: 结构扫描](./phases/phase2_structure.md)
 
 ---
 
@@ -18,31 +18,31 @@ git grep -E -h "|# 阶段 1: 项目类型检测
 test -f package.json && head -n 20 package.json
 
 # 检查后端特征（pom.xml, go.mod, requirements.txt, src/main/, app.py）
-test -f pom.xml && echo "git grep -E -h "|=== Maven/Java ==="git grep -E -h "| && head -n 30 pom.xml
-test -f go.mod && echo "git grep -E -h "|=== Go ==="git grep -E -h "| && head -n 15 go.mod
-test -f requirements.txt && echo "git grep -E -h "|=== Python ==="git grep -E -h "| && head -n 20 requirements.txt
-test -f Cargo.toml && echo "git grep -E -h "|=== Rust ==="git grep -E -h "| && head -n 20 Cargo.toml
-test -f package.json && git grep -h "git grep -E -h "|express\|@nestjs\|fastify"git grep -E -h "| -- package.json 2>/dev/null | head -n 3
-if ls *.csproj 2>/dev/null | head -n 1 >/dev/null; then echo "git grep -E -h "|=== .NET ==="git grep -E -h "|; fi
+test -f pom.xml && echo "=== Maven/Java ===" && head -n 30 pom.xml
+test -f go.mod && echo "=== Go ===" && head -n 15 go.mod
+test -f requirements.txt && echo "=== Python ===" && head -n 20 requirements.txt
+test -f Cargo.toml && echo "=== Rust ===" && head -n 20 Cargo.toml
+test -f package.json && git grep -h "express\|@nestjs\|fastify" -- package.json 2>/dev/null | head -n 3
+if ls *.csproj 2>/dev/null | head -n 1 >/dev/null; then echo "=== .NET ==="; fi
 
 # 检查移动端特征
-test -f app/src/main/AndroidManifest.xml && echo "git grep -E -h "|=== Android ==="git grep -E -h "|
+test -f app/src/main/AndroidManifest.xml && echo "=== Android ==="
 # .xcodeproj 是目录而不是文件，用 if-then 形式
-if ls *.xcodeproj 2>/dev/null | head -n 1 >/dev/null; then echo "git grep -E -h "|=== iOS ==="git grep -E -h "|; fi
-test -f pubspec.yaml && echo "git grep -E -h "|=== Flutter ==="git grep -E -h "|
-test -f package.json && git grep -h "git grep -E -h "|react-native"git grep -E -h "| -- package.json 2>/dev/null | head -n 3
+if ls *.xcodeproj 2>/dev/null | head -n 1 >/dev/null; then echo "=== iOS ==="; fi
+test -f pubspec.yaml && echo "=== Flutter ==="
+test -f package.json && git grep -h "react-native" -- package.json 2>/dev/null | head -n 3
 
 # 检查小程序特征
-test -f app.json && echo "git grep -E -h "|=== WeChat Mini Program ==="git grep -E -h "|
-test -f app.acss && echo "git grep -E -h "|=== Alipay Mini Program ==="git grep -E -h "|
-test -f project.swan.json && echo "git grep -E -h "|=== Baidu Mini Program ==="git grep -E -h "|
+test -f app.json && echo "=== WeChat Mini Program ==="
+test -f app.acss && echo "=== Alipay Mini Program ==="
+test -f project.swan.json && echo "=== Baidu Mini Program ==="
 
 # 检查桌面端特征
-test -f package.json && git grep -h "git grep -E -h "|\"git grep -E -h "|electron\""git grep -E -h "| -- package.json 2>/dev/null | head -n 3
-test -f src-tauri/Cargo.toml && echo "git grep -E -h "|=== Tauri ==="git grep -E -h "|
+test -f package.json && git grep -h "\"electron\"" -- package.json 2>/dev/null | head -n 3
+test -f src-tauri/Cargo.toml && echo "=== Tauri ==="
 
 # 检查 HarmonyOS 特征（entry/src/main/, *.ets, lib*.so）
-test -d entry/src/main/ets && echo "git grep -E -h "|=== HarmonyOS ==="
+test -d entry/src/main/ets && echo "=== HarmonyOS ==="
 git ls-files '*.ets' 2>/dev/null | head -n 10
 ```
 

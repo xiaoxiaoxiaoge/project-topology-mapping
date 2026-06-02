@@ -1,4 +1,4 @@
-git grep -E -h "|# 小程序项目检测命令
+# 小程序项目检测命令
 
 > Single source of truth for mini-program scanning.
 > 适用：微信 / 支付宝 / 抖音 / 百度 / QQ 小程序，以及跨平台（uni-app、Taro、Remax 等）。
@@ -17,14 +17,14 @@ ls -la app.json app.acss mini.project.json 2>/dev/null
 
 # 抖音小程序
 ls -la project.config.json app.json 2>/dev/null
-git grep -h "git grep -E -h "|tt\."git grep -E -h "| -- '*.js' '*.ts' 2>/dev/null | head -n 1
+git grep -h "tt\." -- '*.js' '*.ts' 2>/dev/null | head -n 1
 
 # 百度小程序
 ls -la project.swan.json 2>/dev/null
-git grep -h "git grep -E -h "|swan\."git grep -E -h "| -- '*.js' '*.ts' 2>/dev/null | head -n 1
+git grep -h "swan\." -- '*.js' '*.ts' 2>/dev/null | head -n 1
 
 # QQ 小程序
-git grep -h "git grep -E -h "|qq\."git grep -E -h "| -- '*.js' '*.ts' 2>/dev/null | head -n 1
+git grep -h "qq\." -- '*.js' '*.ts' 2>/dev/null | head -n 1
 
 # 跨平台 (Taro / uni-app / Remax)
 ls -la project.config.json 2>/dev/null            # Taro
@@ -54,7 +54,7 @@ ls -la package.json tsconfig.json 2>/dev/null     # Remax
 cat app.json project.config.json 2>/dev/null
 
 # 2. 所有页面
-cat app.json | python -c "git grep -E -h "|import json,sys; print('\n'.join(json.load(sys.stdin)['pages']))"git grep -E -h "| 2>/dev/null
+cat app.json | python -c "import json,sys; print('\n'.join(json.load(sys.stdin)['pages']))" 2>/dev/null
 
 # 3. JS / TS / WXML / WXSS / JSON 文件
 git ls-files 'miniprogram/**/*.js' 'miniprogram/**/*.ts' 2>/dev/null | head -n 150
@@ -82,17 +82,17 @@ cat miniprogram/app.wxss 2>/dev/null | head -n 20
 git ls-files 'miniprogram/components/*/index.json' 2>/dev/null
 
 # 4. 组件被引用情况
-git grep -h "git grep -E -h "|usingComponents"git grep -E -h "| -- '*.json' 2>/dev/null | head -n 30
+git grep -h "usingComponents" -- '*.json' 2>/dev/null | head -n 30
 
 # 5. API 调用（wx.*）
-git grep -h "git grep -E -h "|wx\."git grep -E -h "| -- '*.js' '*.ts' 2>/dev/null | \
+git grep -h "wx\." -- '*.js' '*.ts' 2>/dev/null | \
   sed 's/.*\(wx\.\)\([a-zA-Z]*\).*/\1\2/g' | sort | uniq -c | sort -rn | head -n 30
 
 # 6. 第三方库
 cat package.json 2>/dev/null | head -n 40
 
 # 7. 云开发
-git grep -h "git grep -E -h "|wx.cloud\|wx-server-sdk"git grep -E -h "| -- '*.js' '*.ts' 2>/dev/null
+git grep -h "wx.cloud\|wx-server-sdk" -- '*.js' '*.ts' 2>/dev/null
 
 # 8. 插件 plugin.json
 git ls-files 'plugin.json' 'plugin/*/plugin.json' 2>/dev/null
@@ -106,37 +106,37 @@ cat miniprogram/utils/request.js 2>/dev/null
 cat miniprogram/api/index.js 2>/dev/null
 
 # 2. 状态管理（redux / mobx / zustand 在小程序中的用法）
-git grep -h "git grep -E -h "|wx.setStorage\|wx.getStorage\|wx.removeStorage"git grep -E -h "| -- '*.js' '*.ts' 2>/dev/null | head -n 20
+git grep -h "wx.setStorage\|wx.getStorage\|wx.removeStorage" -- '*.js' '*.ts' 2>/dev/null | head -n 20
 
 # 3. 全局数据 globalData
-git grep -h "git grep -E -h "|globalData\."git grep -E -h "| -- '*.js' '*.ts' 2>/dev/null | head -n 20
+git grep -h "globalData\." -- '*.js' '*.ts' 2>/dev/null | head -n 20
 
 # 4. 事件总线
-git grep -h "git grep -E -h "|getEventBus\|getApp().globalData\|wx.publishHandler"git grep -E -h "| -- '*.js' '*.ts' 2>/dev/null
+git grep -h "getEventBus\|getApp().globalData\|wx.publishHandler" -- '*.js' '*.ts' 2>/dev/null
 ```
 
 ### 差异点检测
 
 ```bash
 # 1. 页面生命周期使用情况
-git grep -h "git grep -E -h "|onLoad\|onShow\|onReady\|onHide\|onUnload\|onPullDownRefresh\|onReachBottom"git grep -E -h "| \
+git grep -h "onLoad\|onShow\|onReady\|onHide\|onUnload\|onPullDownRefresh\|onReachBottom" \
   -- 'miniprogram/pages/**/*.js' 'miniprogram/pages/**/*.ts' 2>/dev/null | sort | uniq -c | sort -rn
 
 # 2. 各页面的 API 调用（差异表）
 for page in $(git ls-files 'miniprogram/pages/*/index.js' 2>/dev/null); do
-  echo "git grep -E -h "|=== $page ==="git grep -E -h "|
-  git grep -h "git grep -E -h "|wx\."git grep -E -h "| "git grep -E -h "|$page"git grep -E -h "| 2>/dev/null
+  echo "=== $page ==="
+  git grep -h "wx\." "$page" 2>/dev/null
 done
 
 # 3. 自定义组件使用差异
-git grep -h "git grep -E -h "|<[A-Z]"git grep -E -h "| -- 'miniprogram/**/*.wxml' 2>/dev/null | \
+git grep -h "<[A-Z]" -- 'miniprogram/**/*.wxml' 2>/dev/null | \
   sed 's/.*<\([A-Z][a-zA-Z]*\).*/\1/g' | sort | uniq -c | sort -rn | head -n 20
 
 # 4. WXML 模板引用
-git grep -h "git grep -E -h "|<import\|<include"git grep -E -h "| -- 'miniprogram/**/*.wxml' 2>/dev/null
+git grep -h "<import\|<include" -- 'miniprogram/**/*.wxml' 2>/dev/null
 
 # 5. 行为统计 / 埋点
-git grep -h "git grep -E -h "|wx.reportMonitor\|wx.reportEvent\|wx.getExptInfoSync"git grep -E -h "| -- '*.js' '*.ts' 2>/dev/null
+git grep -h "wx.reportMonitor\|wx.reportEvent\|wx.getExptInfoSync" -- '*.js' '*.ts' 2>/dev/null
 ```
 
 ### 阶段 7 检查
@@ -146,7 +146,7 @@ git grep -h "git grep -E -h "|wx.reportMonitor\|wx.reportEvent\|wx.getExptInfoSy
 git ls-files 'miniprogram/pages/*/index.js' 2>/dev/null
 
 # 跨端差异代码
-git grep -h "git grep -E -h "|process.env.TARO_ENV\|#ifdef MP-WEIXIN\|#ifdef MP-ALIPAY"git grep -E -h "| -- '*.js' '*.ts' 2>/dev/null
+git grep -h "process.env.TARO_ENV\|#ifdef MP-WEIXIN\|#ifdef MP-ALIPAY" -- '*.js' '*.ts' 2>/dev/null
 ```
 
 ---
@@ -158,15 +158,15 @@ git grep -h "git grep -E -h "|process.env.TARO_ENV\|#ifdef MP-WEIXIN\|#ifdef MP-
 cat app.json app.acss mini.project.json 2>/dev/null
 
 # 2. 页面（my.* API）
-git grep -h "git grep -E -h "|my\."git grep -E -h "| -- '*.js' '*.ts' 2>/dev/null | \
+git grep -h "my\." -- '*.js' '*.ts' 2>/dev/null | \
   sed 's/.*\(my\.\)\([a-zA-Z]*\).*/\1\2/g' | sort | uniq -c | sort -rn | head -n 30
 
 # 3. 跨端差异
-git grep -h "git grep -E -h "|my\.\|wx\."git grep -E -h "| -- '*.js' '*.ts' 2>/dev/null | \
+git grep -h "my\.\|wx\." -- '*.js' '*.ts' 2>/dev/null | \
   sed 's/.*\(my\.\|wx\.\)\([a-zA-Z]*\).*/\1\2/g' | sort | uniq -c | sort -rn
 
 # 4. 组件库
-git grep -h "git grep -E -h "|<[a-z]-[a-z]"git grep -E -h "| -- '*.axml' 2>/dev/null | head -n 20
+git grep -h "<[a-z]-[a-z]" -- '*.axml' 2>/dev/null | head -n 20
 ```
 
 ---
@@ -175,15 +175,15 @@ git grep -h "git grep -E -h "|<[a-z]-[a-z]"git grep -E -h "| -- '*.axml' 2>/dev/
 
 ```bash
 # 抖音
-git grep -h "git grep -E -h "|tt\."git grep -E -h "| -- '*.js' '*.ts' 2>/dev/null | \
+git grep -h "tt\." -- '*.js' '*.ts' 2>/dev/null | \
   sed 's/.*\(tt\.\)\([a-zA-Z]*\).*/\1\2/g' | sort | uniq -c | sort -rn | head -n 20
 
 # 百度
-git grep -h "git grep -E -h "|swan\."git grep -E -h "| -- '*.js' '*.ts' 2>/dev/null | \
+git grep -h "swan\." -- '*.js' '*.ts' 2>/dev/null | \
   sed 's/.*\(swan\.\)\([a-zA-Z]*\).*/\1\2/g' | sort | uniq -c | sort -rn | head -n 20
 
 # QQ
-git grep -h "git grep -E -h "|qq\."git grep -E -h "| -- '*.js' '*.ts' 2>/dev/null | \
+git grep -h "qq\." -- '*.js' '*.ts' 2>/dev/null | \
   sed 's/.*\(qq\.\)\([a-zA-Z]*\).*/\1\2/g' | sort | uniq -c | sort -rn | head -n 20
 ```
 
@@ -201,10 +201,10 @@ cat project.config.json config/index.js 2>/dev/null
 git ls-files 'src/pages/*' 2>/dev/null
 
 # 3. 跨端条件
-git grep -h "git grep -E -h "|process.env.TARO_ENV"git grep -E -h "| -- '*.tsx' '*.jsx' '*.vue' 2>/dev/null | head -n 20
+git grep -h "process.env.TARO_ENV" -- '*.tsx' '*.jsx' '*.vue' 2>/dev/null | head -n 20
 
 # 4. Taro 组件使用
-git grep -h "git grep -E -h "|from ['\"git grep -E -h "|]@tarojs"git grep -E -h "| -- '*.tsx' '*.jsx' '*.vue' 2>/dev/null | sort | uniq -c | sort -rn
+git grep -h "from ['\"]@tarojs" -- '*.tsx' '*.jsx' '*.vue' 2>/dev/null | sort | uniq -c | sort -rn
 ```
 
 ### uni-app
@@ -214,10 +214,10 @@ git grep -h "git grep -E -h "|from ['\"git grep -E -h "|]@tarojs"git grep -E -h 
 cat src/manifest.json pages.json 2>/dev/null
 
 # 2. 跨端条件
-git grep -h "git grep -E -h "|#ifdef MP-WEIXIN\|#ifdef H5\|#ifdef APP-PLUS\|#ifdef MP-ALIPAY"git grep -E -h "| -- '*.vue' 2>/dev/null
+git grep -h "#ifdef MP-WEIXIN\|#ifdef H5\|#ifdef APP-PLUS\|#ifdef MP-ALIPAY" -- '*.vue' 2>/dev/null
 
 # 3. uni API
-git grep -h "git grep -E -h "|uni\."git grep -E -h "| -- '*.js' '*.ts' '*.vue' 2>/dev/null | \
+git grep -h "uni\." -- '*.js' '*.ts' '*.vue' 2>/dev/null | \
   sed 's/.*\(uni\.\)\([a-zA-Z]*\).*/\1\2/g' | sort | uniq -c | sort -rn | head -n 20
 ```
 
@@ -231,7 +231,7 @@ cat package.json tsconfig.json 2>/dev/null
 git ls-files 'src/pages/*' 2>/dev/null
 
 # 3. 平台 API 抽象
-git grep -h "git grep -E -h "|import { useRemax" -- '*.tsx' '*.ts' 2>/dev/null | sort -u
+git grep -h "import { useRemax" -- '*.tsx' '*.ts' 2>/dev/null | sort -u
 ```
 
 ---

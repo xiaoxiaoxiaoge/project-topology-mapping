@@ -10,7 +10,7 @@
 **⚠️ 全栈项目必须生成"前后端定位速查表"，用于快速定位功能修改位置。**
 
 > 前置：阶段 1-2 已完成。
-> 后置：进入 [阶段 4: 生成拓扑文件](./phase4_output.md)
+> 后置：进入 [阶段 4: 生成拓扑文件](./phases/phase4_output.md)
 
 ---
 
@@ -172,7 +172,7 @@ cat src/main/java/com/example/controller/<Name3>Controller.java 2>/dev/null
 
 ### 3.4.3 差异表（极度差异时必须生成）
 
-详见 [phase7_differences.md](./phase7_differences.md) § 差异识别结果记录。
+详见 [phase7_differences.md](./phases/phase7_differences.md) § 差异识别结果记录。
 
 ---
 
