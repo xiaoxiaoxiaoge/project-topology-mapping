@@ -1,13 +1,13 @@
-# 阶段 3: 数据流分析 + 前后端定位速查
+git grep -E -h "|# 阶段 3: 数据流分析 + 前后端定位速查
 
 **⚠️ 重要：阶段 2 的差异点预检结果决定了阶段 3 的采样策略。**
 
-- 如果阶段 2 发现"无差异点" → 阶段 3 只采样 1 个代表性页面/类
-- 如果阶段 2 发现"极度差异点" → 阶段 3 必须逐个分析所有子模块/控制器
+- 如果阶段 2 发现"git grep -E -h "|无差异点"git grep -E -h "| → 阶段 3 只采样 1 个代表性页面/类
+- 如果阶段 2 发现"git grep -E -h "|极度差异点"git grep -E -h "| → 阶段 3 必须逐个分析所有子模块/控制器
 
 **⚠️ 这是最容易被跳过的部分，也是最重要的改进点。**
 
-**⚠️ 全栈项目必须生成"前后端定位速查表"，用于快速定位功能修改位置。**
+**⚠️ 全栈项目必须生成"git grep -E -h "|前后端定位速查表"git grep -E -h "|，用于快速定位功能修改位置。**
 
 > 前置：阶段 1-2 已完成。
 > 后置：进入 [阶段 4: 生成拓扑文件](./phase4_output.md)
@@ -53,9 +53,9 @@ git ls-files 'main/*/http*' 'main/*/api*' 2>/dev/null
 
 ```bash
 # HTTP 客户端（RestTemplate / WebClient / OkHttp / HttpClient / axios / reqwest）
-git grep -h "RestTemplate\|WebClient\|OkHttp\|HttpClient" -- '*.java' 2>/dev/null | head -n 20
-git grep -h "axios\|got\|undici" -- '*.ts' '*.js' 2>/dev/null | head -n 20
-git grep -h "reqwest::" -- '*.rs' 2>/dev/null | head -n 20
+git grep -E -h "git grep -E -h "|RestTemplate\|WebClient\|OkHttp\|HttpClient"git grep -E -h "| -- '*.java' 2>/dev/null | head -n 20
+git grep -E -h "git grep -E -h "|axios\|got\|undici"git grep -E -h "| -- '*.ts' '*.js' 2>/dev/null | head -n 20
+git grep -h "git grep -E -h "|reqwest::"git grep -E -h "| -- '*.rs' 2>/dev/null | head -n 20
 
 # 过滤器 / 拦截器
 git ls-files 'src/**/*Filter.*' 'src/**/*Interceptor.*' 2>/dev/null
@@ -81,20 +81,20 @@ git ls-files 'miniprogram/store/*' 2>/dev/null
 git ls-files 'src/renderer/store/*' 2>/dev/null
 
 # 跨平台状态管理
-git grep -h "redux\|zustand\|mobx\|recoil\|jotai\|pinia" -- 'package.json' 2>/dev/null
+git grep -E -h "git grep -E -h "|redux\|zustand\|mobx\|recoil\|jotai\|pinia"git grep -E -h "| -- 'package.json' 2>/dev/null
 ```
 
 ### 后端
 
 ```bash
 # 缓存（Redis / Caffeine / Guava / in-memory）
-git grep -h "@Cacheable\|@CacheEvict\|StringRedisTemplate\|RedisTemplate" -- '*.java' 2>/dev/null | head -n 20
-git grep -h "ioredis\|cache-manager\|node-cache" -- '*.ts' '*.js' 2>/dev/null | head -n 20
-git grep -h "redis::\|Arc<.*Cache\|Mutex<" -- '*.rs' 2>/dev/null | head -n 20
+git grep -E -h "git grep -E -h "|@Cacheable\|@CacheEvict\|StringRedisTemplate\|RedisTemplate"git grep -E -h "| -- '*.java' 2>/dev/null | head -n 20
+git grep -E -h "git grep -E -h "|ioredis\|cache-manager\|node-cache"git grep -E -h "| -- '*.ts' '*.js' 2>/dev/null | head -n 20
+git grep -E -h "git grep -E -h "|redis::\|Arc<.*Cache\|Mutex<"git grep -E -h "| -- '*.rs' 2>/dev/null | head -n 20
 
 # 会话管理
-git grep -h "HttpSession\|@SessionAttribute\|session\|Cookie" -- '*.java' 2>/dev/null | head -n 20
-git grep -h "express-session\|@nestjs/jwt\|passport" -- '*.ts' '*.js' 2>/dev/null | head -n 20
+git grep -E -h "git grep -E -h "|HttpSession\|@SessionAttribute\|session\|Cookie"git grep -E -h "| -- '*.java' 2>/dev/null | head -n 20
+git grep -E -h "git grep -E -h "|express-session\|@nestjs/jwt\|passport"git grep -E -h "| -- '*.ts' '*.js' 2>/dev/null | head -n 20
 ```
 
 ### 重点提取
@@ -122,9 +122,9 @@ git ls-files 'src/**/*SecurityConfig.*' 'src/**/*ShiroConfig.*' 'src/**/*WebSecu
 git ls-files 'src/**/*Auth*' 'src/**/*Jwt*' 2>/dev/null
 
 # 中间件链
-git grep -h "FilterChain\|doFilter\|@PreAuthorize\|@Secured" -- '*.java' 2>/dev/null | head -n 20
-git grep -h "AddAuthentication\|AddAuthorization\|\[Authorize\]" -- '*.cs' 2>/dev/null | head -n 20
-git grep -h "middleware\|UseMiddleware\|from_fn" -- '*.rs' '*.go' '*.ts' '*.js' 2>/dev/null | head -n 20
+git grep -E -h "git grep -E -h "|FilterChain\|doFilter\|@PreAuthorize\|@Secured"git grep -E -h "| -- '*.java' 2>/dev/null | head -n 20
+git grep -E -h "git grep -E -h "|AddAuthentication\|AddAuthorization\|\[Authorize\]"git grep -E -h "| -- '*.cs' 2>/dev/null | head -n 20
+git grep -E -h "git grep -E -h "|middleware\|UseMiddleware\|from_fn"git grep -E -h "| -- '*.rs' '*.go' '*.ts' '*.js' 2>/dev/null | head -n 20
 ```
 
 ### 重点提取
@@ -137,7 +137,7 @@ git grep -h "middleware\|UseMiddleware\|from_fn" -- '*.rs' '*.go' '*.ts' '*.js' 
 
 ## 3.4 核心页面 / Controller 数据流分析
 
-**⚠️ 采样策略的致命缺陷：AI 容易假设"同类模块逻辑一致"，导致修改时出错。**
+**⚠️ 采样策略的致命缺陷：AI 容易假设"git grep -E -h "|同类模块逻辑一致"git grep -E -h "|，导致修改时出错。**
 
 正确做法：**先识别模块内部是否存在差异点（不同子模块有不同逻辑），再决定采样数量。**
 
@@ -180,11 +180,12 @@ cat src/main/java/com/example/controller/<Name3>Controller.java 2>/dev/null
 
 ```bash
 # 前端
-git grep -h "WaterMarkEnum\|watermarkType" -- '*.ts' '*.tsx' 2>/dev/null | head -n 20
+git grep -E -h "git grep -E -h "|WaterMarkEnum\|watermarkType"git grep -E -h "| -- '*.ts' '*.tsx' 2>/dev/null | head -n 20
 
 # 后端
-git grep -h "import\|@Autowired\|@Inject" -- '*.java' 2>/dev/null | \
-  grep "com\.example\." | sed 's/.*import //g; s/;//g' | \
+# 注意：直接用 `^import.*com\.example` 限定到 import 行（避免 @Autowired/@Inject 行的干扰）
+git grep -h "git grep -E -h "|^import.*com\.example"git grep -E -h "| -- '*.java' 2>/dev/null | \
+  sed 's/^import //g; s/;//g' | \
   sort | uniq -c | sort -rn | head -n 30
 ```
 
@@ -232,15 +233,15 @@ useConfigStore: systemConfig → 内存
 git ls-files 'src/services/*.ts' 2>/dev/null | sort
 
 # 提取 API 路径（以 /api/ 开头的路径）
-git grep -h "url: ['\"]\/api\/" -- 'src/services/*.ts' 2>/dev/null | \
-  sed "s/.*url: ['\"]\/api\///g; s/['\"]//g" | sort -u
+git grep -h "git grep -E -h "|url: ['\"git grep -E -h "|]\/api\/"git grep -E -h "| -- 'src/services/*.ts' 2>/dev/null | \
+  sed "git grep -E -h "|s/.*url: ['\"git grep -E -h "|]\/api\///g; s/['\"git grep -E -h "|]//g"git grep -E -h "| | sort -u
 ```
 
 **步骤 2：映射到后端 Controller**
 
 ```bash
 # 搜索后端 Controller 中的路由映射
-git grep -h "@RequestMapping\|@GetMapping\|@PostMapping" -- '*.java' 2>/dev/null | head -n 30
+git grep -E -h "git grep -E -h "|@RequestMapping\|@GetMapping\|@PostMapping"git grep -E -h "| -- '*.java' 2>/dev/null | head -n 30
 ```
 
 **步骤 3：构建定位速查表（占位符版）**
@@ -263,7 +264,7 @@ git grep -h "@RequestMapping\|@GetMapping\|@PostMapping" -- '*.java' 2>/dev/null
 |-----|---------------|
 | 修改某功能 | 查找 API 路径关键字 → 定位到对应 Controller |
 | 修改某页面 | 查找前端文件 → 查看它调用的所有 API |
-| 排查问题 | 查找"涉及微服务"列 → 了解完整调用链路 |
+| 排查问题 | 查找"git grep -E -h "|涉及微服务"列 → 了解完整调用链路 |
 | 新人上手 | 通读速查表 → 5 分钟建立全局认知 |
 
 ### 3.7.3 微服务定位规则（占位符版）

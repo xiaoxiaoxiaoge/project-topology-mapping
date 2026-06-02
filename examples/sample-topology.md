@@ -276,23 +276,25 @@ phases/ ←─── types/ ←─── templates/
 |------|------|----------|
 | 触发与平台 | SKILL.md | 200+ |
 | 项目介绍 | README.md | 350+ |
-| 阶段 1 | phases/phase1_detection.md | 100+ |
-| 阶段 2 | phases/phase2_structure.md | 200+ |
-| 阶段 3 | phases/phase3_dataflow.md | 250+ |
+| 阶段 1 | phases/phase1_detection.md | 130+ |
+| 阶段 2 | phases/phase2_structure.md | 240+ |
+| 阶段 3 | phases/phase3_dataflow.md | 300+ |
 | 阶段 4 | phases/phase4_output.md | 150+ |
-| 阶段 5 | phases/phase5_memory.md | 100+ |
-| 阶段 6 | phases/phase6_validation.md | 150+ |
-| 阶段 7 | phases/phase7_differences.md | 200+ |
+| 阶段 5 | phases/phase5_memory.md | 130+ |
+| 阶段 6 | phases/phase6_validation.md | 100+ |
+| 阶段 7 | phases/phase7_differences.md | 230+ |
 | 前端检测 | types/frontend.md | 150+ |
-| 后端检测 | types/backend.md | 400+ |
-| 移动端检测 | types/mobile.md | 250+ |
-| 小程序检测 | types/miniprogram.md | 200+ |
-| 桌面端检测 | types/desktop.md | 200+ |
+| 后端检测 | types/backend.md | 570+ |
+| 移动端检测 | types/mobile.md | 400+ |
+| 小程序检测 | types/miniprogram.md | 270+ |
+| 桌面端检测 | types/desktop.md | 320+ |
 | HarmonyOS 检测 | types/harmonyos.md | 100+ |
 | 前端模板 | templates/frontend_output.md | 100+ |
 | 后端模板 | templates/backend_output.md | 100+ |
 | HarmonyOS 模板 | templates/harmonyos_output.md | 100+ |
 | 自指示例 | examples/sample-topology.md | ← 本文件 |
+
+> **行数说明：** 表中"+"表示**行数级别**（基于 `(Get-Content).Count` 测量，向上取整到 10）。不是精确字数。文件可能随时更新，行数会变化。
 
 ---
 

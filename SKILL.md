@@ -45,6 +45,7 @@ git rev-parse --show-toplevel  # 应该输出 <your-project> 绝对路径
 | 取后 N 行 | `tail -n N` | `Select-Object -Last N` |
 | 计数 | `wc -l` | `(Get-Content x \| Measure-Object -Line).Lines` |
 | 递归找文件 | `find . -name "*.java"` | `Get-ChildItem -Recurse -Filter *.java` |
+| 列出被 git 追踪的文件 | `git ls-files '*.java'` | `git ls-files '*.java'` *(Git for Windows 自带)*<br>无 git 时回退：`Get-ChildItem -Recurse -Filter *.java \| Select-Object -ExpandProperty FullName` |
 | 文本搜索 | `grep -r "X" --include="*.java"` | `Select-String -Path "*.java" -Pattern "X" -Recurse` |
 | 文本搜索（扩展正则） | `grep -E "pat1\|pat2"` | `Select-String -Pattern "pat1\|pat2"` |
 | 去重排序 | `sort -u` | `Sort-Object -Unique` |
@@ -54,7 +55,9 @@ git rev-parse --show-toplevel  # 应该输出 <your-project> 绝对路径
 | 写文件 | `cat > f <<EOF ... EOF` | `Set-Content -Path f -Value @"..."@` |
 | 删文件 | `rm f` | `Remove-Item f`（建议用 mavis-trash） |
 
-> **本 skill 优先使用 `git ls-files` / `git grep` 等 Git 原生命令**，所有平台（macOS/Linux/Windows Git Bash/WSL）都自带 Git，跨平台一致性最好。
+> **本 skill 优先使用 `git ls-files` / `git grep` 等 Git 原生命令**，所有平台（macOS/Linux/Windows Git Bash/WSL）都自带 Git，跨平台一致性最好。PowerShell 7+ 也自带 `git` 命令（通过 Git for Windows），所以 `git ls-files` 在 Windows 上**优先**用 `git` 本身，**不**走 `Get-ChildItem` fallback。
+
+> **关于正则：本 skill 大量用 `git grep "pat1\|pat2"` 做 OR。** `git grep` 默认就是**扩展正则（ERE）**，所以 `\|` 在这里就是 OR 字符。**但**为了让命令更明确且可移植到非 git 场景（如 `grep -E`），关键 OR 模式建议显式加 `-E`：`git grep -E "pat1|pat2"`。本 skill 内部混用了两种写法，新写命令推荐统一 `-E` 形式。
 
 ---
 

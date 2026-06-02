@@ -1,7 +1,7 @@
-# 阶段 2: 结构扫描 + 差异点预检 + 服务端深度扫描
+git grep -E -h "|# 阶段 2: 结构扫描 + 差异点预检 + 服务端深度扫描
 
 **原则：** 超过 3 个并行查询时，使用 `Explore` agent 并行扫描。
-**关键改进：** 结构扫描时同步进行差异点预检（原文"变异点"），避免采样偏差。
+**关键改进：** 结构扫描时同步进行差异点预检（原文"git grep -E -h "|变异点"git grep -E -h "|），避免采样偏差。
 
 > 前置：阶段 1 已识别项目类型。
 > 后置：进入 [阶段 3: 数据流分析](./phase3_dataflow.md)
@@ -25,21 +25,21 @@
 
 ```bash
 # 1. 所有 Controller 及路由映射（L2 入口）
-find src -type f -name "*Controller.java" -exec echo "=== {} ===" \; \
-  -exec grep -h "@RequestMapping\|@GetMapping\|@PostMapping\|@PutMapping\|@DeleteMapping" {} +
+find src -type f -name "git grep -E -h "|*Controller.java"git grep -E -h "| -exec echo "git grep -E -h "|=== {} ==="git grep -E -h "| \; \
+  -exec grep -h "git grep -E -h "|@RequestMapping\|@GetMapping\|@PostMapping\|@PutMapping\|@DeleteMapping"git grep -E -h "| {} +
 
 # 2. 所有 Service 接口的方法签名（L3 业务）
-find src -type f -name "*Service.java" -exec echo "=== {} ===" \; \
-  -exec grep -h "public.*(" {} +
+find src -type f -name "git grep -E -h "|*Service.java"git grep -E -h "| -exec echo "git grep -E -h "|=== {} ==="git grep -E -h "| \; \
+  -exec grep -h "git grep -E -h "|public.*("git grep -E -h "| {} +
 
 # 3. Feign Client 接口（L4 细节）
-find src -type f -name "*Feign.java" -exec echo "=== {} ===" \; -exec cat {} +
+find src -type f -name "git grep -E -h "|*Feign.java"git grep -E -h "| -exec echo "git grep -E -h "|=== {} ==="git grep -E -h "| \; -exec cat {} +
 
 # 4. @Transactional 使用场景
-git grep -h "@Transactional" -- '*.java' 2>/dev/null | sort -u
+git grep -h "git grep -E -h "|@Transactional"git grep -E -h "| -- '*.java' 2>/dev/null | sort -u
 
 # 5. 异常处理配置
-git grep -h "@ExceptionHandler\|@ControllerAdvice\|@RestControllerAdvice" -- '*.java' 2>/dev/null
+git grep -E -h "git grep -E -h "|@ExceptionHandler\|@ControllerAdvice\|@RestControllerAdvice"git grep -E -h "| -- '*.java' 2>/dev/null
 
 # 6. 读取 2-3 个关键 Controller 完整内容
 cat src/main/java/com/example/controller/<Name1>Controller.java
@@ -50,14 +50,14 @@ cat src/main/java/com/example/controller/<Name2>Controller.java
 
 ```bash
 # 1. 所有 Handler/Controller 文件
-find . -type f \( -name "*handler*.go" -o -name "*controller*.go" \) -not -path "./vendor/*"
+find . -type f \( -name "git grep -E -h "|*handler*.go"git grep -E -h "| -o -name "git grep -E -h "|*controller*.go"git grep -E -h "| \) -not -path "git grep -E -h "|./vendor/*"git grep -E -h "|
 
 # 2. 路由定义
-git grep -h "r\.Get\|r\.Post\|r\.Put\|r\.Delete\|r\.Group" -- '*.go' 2>/dev/null \
+git grep -E -h "git grep -E -h "|r\.Get\|r\.Post\|r\.Put\|r\.Delete\|r\.Group"git grep -E -h "| -- '*.go' 2>/dev/null \
   | grep -v vendor | head -n 50
 
 # 3. Middleware 链
-git grep -h "Use\|Middleware\|func.*Middleware" -- '*.go' 2>/dev/null | grep -v vendor
+git grep -E -h "git grep -E -h "|Use\|Middleware\|func.*Middleware"git grep -E -h "| -- '*.go' 2>/dev/null | grep -v vendor
 
 # 4. 读取主要路由文件
 cat router/router.go
@@ -157,16 +157,16 @@ git ls-files 'src/constant/*.ts' 'src/enums/*.ts' 'src/utils/*.ts' | sort
 git ls-files 'src/components/*' | sort
 
 # 2. 共享组件被引用情况
-git grep -h "from ['\"]@/components/" -- '*.tsx' '*.jsx' 2>/dev/null | \
-  sed "s/.*from ['\"]@\/components\///g; s/['\"].*//g" | sort | uniq -c | sort -rn
+git grep -h "git grep -E -h "|from ['\"git grep -E -h "|]@/components/"git grep -E -h "| -- '*.tsx' '*.jsx' 2>/dev/null | \
+  sed "git grep -E -h "|s/.*from ['\"git grep -E -h "|]@\/components\///g; s/['\"git grep -E -h "|].*//g"git grep -E -h "| | sort | uniq -c | sort -rn
 
 # 3. hooks 被引用情况
-git grep -h "from ['\"]@/hooks/" -- '*.tsx' '*.ts' 2>/dev/null | \
-  sed "s/.*from ['\"]@\/hooks\///g; s/['\"].*//g" | sort | uniq -c | sort -rn
+git grep -h "git grep -E -h "|from ['\"git grep -E -h "|]@/hooks/"git grep -E -h "| -- '*.tsx' '*.ts' 2>/dev/null | \
+  sed "git grep -E -h "|s/.*from ['\"git grep -E -h "|]@\/hooks\///g; s/['\"git grep -E -h "|].*//g"git grep -E -h "| | sort | uniq -c | sort -rn
 
 # 4. services 被引用情况
-git grep -h "from ['\"]@/services/" -- '*.tsx' '*.ts' 2>/dev/null | \
-  sed "s/.*from ['\"]@\/services\///g; s/['\"].*//g" | sort | uniq -c | sort -rn | head -n 30
+git grep -h "git grep -E -h "|from ['\"git grep -E -h "|]@/services/"git grep -E -h "| -- '*.tsx' '*.ts' 2>/dev/null | \
+  sed "git grep -E -h "|s/.*from ['\"git grep -E -h "|]@\/services\///g; s/['\"git grep -E -h "|].*//g" | sort | uniq -c | sort -rn | head -n 30
 
 # 5. router modules 数量
 ls src/router/modules/*.tsx 2>/dev/null | wc -l

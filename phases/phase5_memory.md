@@ -1,4 +1,4 @@
-# 阶段 5: 存储到记忆
+git grep -E -h "|# 阶段 5: 存储到记忆
 
 **将阶段 4 生成的拓扑文件保存到磁盘，并将项目摘要写入记忆系统。**
 
@@ -16,16 +16,16 @@
 PROJECT_ROOT=$(git rev-parse --show-toplevel 2>/dev/null || pwd)
 
 # 写入主文件
-cat > "$PROJECT_ROOT/.project-topology.md" <<'EOF'
+cat > "git grep -E -h "|$PROJECT_ROOT/.project-topology.md"git grep -E -h "| <<'EOF'
 ...（阶段 4 生成的 markdown 内容）...
 EOF
 
 # 多端项目：写入分文件
-cat > "$PROJECT_ROOT/.project-topology-frontend.md" <<'EOF'
+cat > "git grep -E -h "|$PROJECT_ROOT/.project-topology-frontend.md"git grep -E -h "| <<'EOF'
 ...
 EOF
 
-cat > "$PROJECT_ROOT/.project-topology-backend.md" <<'EOF'
+cat > "git grep -E -h "|$PROJECT_ROOT/.project-topology-backend.md"git grep -E -h "| <<'EOF'
 ...
 EOF
 ```
@@ -43,7 +43,19 @@ EOF
 
 ## 5.2 写入项目摘要到记忆系统
 
-将以下内容追加到 `~/.claude/memory/projects/<name>.md`（`<name>` = 仓库名或自定义别名）：
+> **`<name>` 命名规则（重要）：**
+>
+> | 来源 | 示例 | 适用场景 |
+> |------|------|---------|
+> | **仓库 basename**（默认） | `~/.claude/memory/projects/my-project.md` | 单仓一个项目 |
+> | **自定义 alias** | `~/.claude/memory/projects/<company>-<team>-<project>.md` | 多个项目同名/需要区分 |
+> | **路径 hash** | `~/.claude/memory/projects/<sha256-truncated>.md` | 跨机器同步、防冲突 |
+>
+> **默认推荐"git grep -E -h "|仓库 basename"git grep -E -h "|**。如果 `git remote get-url origin` 末尾是 `xxx.git`，则 `<name>` = `xxx`。
+>
+> **冲突处理：** 如果 basename 已被占用（如本地多个工作区同名），加 `-<短路径哈希>` 后缀（如 `my-project-a1b2c3`）。
+
+将以下内容追加到 `~/.claude/memory/projects/<name>.md`：
 
 ```markdown
 ## 项目参考
@@ -118,7 +130,7 @@ ls -la .project-topology*.md 2>/dev/null
 
 ```bash
 # 看哪些关键文件变了
-git diff --name-only HEAD~1 HEAD 2>/dev/null | grep -E "\.(ts|js|tsx|jsx|java|go|py|ets|vue)$"
+git diff --name-only HEAD~1 HEAD 2>/dev/null | grep -E "git grep -E -h "|\.(ts|js|tsx|jsx|java|go|py|ets|vue)$"
 
 # 看是否有新目录
 git diff --name-only --diff-filter=A HEAD~1 HEAD 2>/dev/null | xargs -I {} dirname {} | sort -u

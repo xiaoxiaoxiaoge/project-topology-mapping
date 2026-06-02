@@ -1,4 +1,4 @@
-# 阶段 4: 生成拓扑文件
+git grep -E -h "|# 阶段 4: 生成拓扑文件
 
 **根据用户在阶段 1 确认的项目类型和阶段 0 的扫描深度选择模板。**
 
@@ -24,7 +24,7 @@
 | `.project-topology-backend.md` | 后端完整拓扑 | 修改后端 Controller/Service/微服务 |
 | `.project-topology-mobile.md` *(可选)* | 移动端完整拓扑 | 修改 App 页面/原生模块 |
 
-> 用户可以在阶段 1 之前主动说"合并"或"分离"覆盖默认值。
+> 用户可以在阶段 1 之前主动说"git grep -E -h "|合并"git grep -E -h "|或"git grep -E -h "|分离"覆盖默认值。
 
 ---
 
