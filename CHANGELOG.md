@@ -40,6 +40,7 @@
 - **差异点检测命令 3 处重复** — 集中到各自 types/*.md
 - **完整性 checklist 重复** — 集中到 phase6_validation.md
 - **Agent 编号跳号** — 原 phase3 用 "Agent 6, 7, 8, 10"（跳 9），改用 task 命名
+- **README 与 SKILL 项目类型覆盖不一致** — SKILL.md 速查表遗漏"移动端跨端 (uni-app/Taro)"与"桌面端 Tauri"两行，已同步 README
 - **`superpowers:xxx` 集成点悬空** — 改为"可选"描述
 
 ### 📚 文档

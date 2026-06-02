@@ -93,6 +93,22 @@ git rev-parse --show-toplevel  # 应该输出 <your-project> 绝对路径
 
 **默认推荐「标准」**。用户主动要求"快"或"细"时切换。
 
+### 按 Phase 的 token 预算分解（标准档）
+
+| Phase | 主要内容 | 预估 token |
+|-------|---------|-----------|
+| 1 项目类型检测 | 特征文件 + 框架识别 | ~0.5k |
+| 2 结构扫描 | 目录树 + 引用关系 + 差异点预检 | ~2k |
+| 3 数据流分析 | HTTP/状态/守卫/核心页面（按差异度采样） | ~3k |
+| 4 生成拓扑 | 组装上述内容为 .project-topology.md | ~0.5k |
+| 5 存储到记忆 | 写 ~/.claude/memory/projects/<name>.md | ~0.5k |
+| 6 完整性校验 | checklist 逐项确认 | ~0.5k |
+| 7 差异识别 | 同类模块差异矩阵（仅在"高度/极度差异"时执行） | ~1k |
+| **合计（标准）** | | **~8k** |
+
+> 快速档：跳过 Phase 7、Phase 3 减半、Phase 2 只到 L2 → ~2k。
+> 深度档：Phase 2 完整到 L4、Phase 3 全部采样、Phase 7 强制执行 → ~20k+。
+
 ---
 
 ## ⚠️ 重要警告
@@ -183,8 +199,10 @@ project-topology-mapping/
 | **移动端 (Android)** | `build.gradle`, `app/src/main/java` | Activity, Fragment, ViewModel | [types/mobile.md](./types/mobile.md) |
 | **移动端 (iOS)** | `*.xcodeproj`, `Sources/` | ViewController, Storyboard | [types/mobile.md](./types/mobile.md) |
 | **移动端 (RN/Flutter)** | `package.json`/`pubspec.yaml` | 屏幕组件, 路由 | [types/mobile.md](./types/mobile.md) |
+| **移动端跨端 (uni-app/Taro)** | `src/manifest.json` | 条件编译, 平台差异 | [types/mobile.md](./types/mobile.md) |
 | **小程序 (微信)** | `app.json`, `pages/`, `miniprogram/` | 页面生命周期, 组件 | [types/miniprogram.md](./types/miniprogram.md) |
 | **桌面端 (Electron)** | `package.json`, `main/`, `renderer/` | Main/Renderer 进程, IPC | [types/desktop.md](./types/desktop.md) |
+| **桌面端 (Tauri)** | `src-tauri/Cargo.toml`, `tauri.conf.json` | Rust Command, Webview | [types/desktop.md](./types/desktop.md) |
 | **HarmonyOS** | `entry/src/main/ets`, `*.ets` | 页面路由, Native 调用 | [types/harmonyos.md](./types/harmonyos.md) |
 | **全栈** | 同时存在前端+后端特征 | 前端+后端差异点都要检测 | 多个 types/ 组合使用 |
 
