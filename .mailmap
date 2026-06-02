@@ -1,0 +1,17 @@
+# .mailmap — git 内置作者名/邮箱重写
+#
+# 当 `git log` / `git shortlog` 等命令配合 `--use-mailmap` (默认开启) 时,
+# 会按本文件规则替换作者显示。可用于:
+#   1. 合并同一作者不同邮箱的提交
+#   2. 隐私: 隐藏真实邮箱 (如公司邮箱), 映射为公开的 noreply
+#   3. 修正历史 commit 中的拼写错误
+#
+# 格式 (3 选 1):
+#   <email>                             <old-email>
+#   Name <email>                        <old-email>
+#   Name <email>     Old Name <old-email>
+#
+# 详见 gitmailmap(5)
+
+# 公司邮箱 → GitHub noreply
+maojian <53367351+xiaoxiaoxiaoge@users.noreply.github.com> <maojian@hddata.cn>
