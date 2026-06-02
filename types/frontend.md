@@ -1,10 +1,10 @@
-git grep -E -h "|# 前端项目检测命令
+# 前端项目检测命令
 
 ## 目录结构检测
 
 ```bash
 # 1. 目录深度分析（使用4层深度）
-find src -maxdepth 4 -type f \( -name "git grep -E -h "|*.ts"git grep -E -h "| -o -name "git grep -E -h "|*.tsx"git grep -E -h "| -o -name "git grep -E -h "|*.js"git grep -E -h "| -o -name "git grep -E -h "|*.jsx"git grep -E -h "| \) 2>/dev/null | head -n 150
+find src -maxdepth 4 -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \) 2>/dev/null | head -n 150
 
 # 2. 一级目录
 find src -maxdepth 1 -type d | sort
@@ -20,13 +20,13 @@ ls -la src/components/ src/layouts/ src/router/ 2>/dev/null
 
 # 6. services 目录结构
 find src/services -maxdepth 1 -type d | sort
-find src/services -type f -name "git grep -E -h "|*.ts"git grep -E -h "| | sort
+find src/services -type f -name "*.ts" | sort
 
 # 7. hooks 目录
-find src/hooks -maxdepth 1 -type f -name "git grep -E -h "|*.ts"git grep -E -h "| | sort
+find src/hooks -maxdepth 1 -type f -name "*.ts" | sort
 
 # 8. store 目录
-find src/store -maxdepth 1 -type f -name "git grep -E -h "|*.ts"git grep -E -h "| | sort
+find src/store -maxdepth 1 -type f -name "*.ts" | sort
 
 # 9. router modules (Ant Design Pro 风格)
 ls src/router/modules/*.tsx 2>/dev/null | wc -l
@@ -44,7 +44,7 @@ cat package.json 2>/dev/null | head -n 40
 > | 项目风格 | 路由位置 | 检测命令 |
 > |---------|---------|---------|
 > | **Ant Design Pro** | `src/router/modules/*.tsx` | `ls src/router/modules/*.tsx` |
-> | **纯 React Router** | `src/router/index.tsx` + `<Route>` 列表 | `git grep -h "git grep -E -h "|<Route"git grep -E -h "| -- 'src/router/index.*' 2>/dev/null` |
+> | **纯 React Router** | `src/router/index.tsx` + `<Route>` 列表 | `git grep -h "<Route" -- 'src/router/index.*' 2>/dev/null` |
 > | **Next.js** | `pages/*.tsx` 或 `app/*.tsx` (App Router) | `git ls-files 'pages/*.tsx' 'app/*.tsx' 2>/dev/null` |
 > | **Nuxt** | `pages/*.vue` | `git ls-files 'pages/*.vue' 2>/dev/null` |
 > | **Vue Router (默认)** | `src/router/index.ts` + 路由数组 | `git ls-files 'src/router/index.*' 2>/dev/null` |
@@ -63,31 +63,31 @@ find src/pages -maxdepth 1 -type d | sort
 find src/pages -maxdepth 2 -type d | sort
 
 # 3. 所有页面 TSX 文件（按目录分组）
-find src/pages -type f -name "git grep -E -h "|*.tsx"git grep -E -h "| | sort
+find src/pages -type f -name "*.tsx" | sort
 
 # 4. 识别页面模块统一结构模式
-find src/pages -name "git grep -E -h "|list.tsx"git grep -E -h "| | sed 's|/list\.tsx||' | xargs -I {} dirname {} | xargs -I {} basename {}
+find src/pages -name "list.tsx" | sed 's|/list\.tsx||' | xargs -I {} dirname {} | xargs -I {} basename {}
 ```
 
 ## 组件引用关系检测
 
 ```bash
 # 1. 组件目录完整结构
-find src/components -type f \( -name "git grep -E -h "|*.tsx"git grep -E -h "| -o -name "git grep -E -h "|*.ts"git grep -E -h "| \) | sort
+find src/components -type f \( -name "*.tsx" -o -name "*.ts" \) | sort
 
 # 2. 共享组件被引用情况
-grep -rh "git grep -E -h "|from ['\"git grep -E -h "|]@/components/"git grep -E -h "| --include="git grep -E -h "|*.tsx"git grep -E -h "| --include="git grep -E -h "|*.jsx"git grep -E -h "| src/ 2>/dev/null | \
-  sed "git grep -E -h "|s/.*from ['\"git grep -E -h "|]@\/components\///g; s/['\"git grep -E -h "|].*//g"git grep -E -h "| | \
+grep -rh "from ['\"]@/components/" --include="*.tsx" --include="*.jsx" src/ 2>/dev/null | \
+  sed "s/.*from ['\"]@\/components\///g; s/['\"].*//g" | \
   sort | uniq -c | sort -rn
 
 # 3. hooks 被引用情况
-grep -rh "git grep -E -h "|from ['\"git grep -E -h "|]@/hooks/"git grep -E -h "| --include="git grep -E -h "|*.tsx"git grep -E -h "| --include="git grep -E -h "|*.ts"git grep -E -h "| src/ 2>/dev/null | \
-  sed "git grep -E -h "|s/.*from ['\"git grep -E -h "|]@\/hooks\///g; s/['\"git grep -E -h "|].*//g"git grep -E -h "| | \
+grep -rh "from ['\"]@/hooks/" --include="*.tsx" --include="*.ts" src/ 2>/dev/null | \
+  sed "s/.*from ['\"]@\/hooks\///g; s/['\"].*//g" | \
   sort | uniq -c | sort -rn
 
 # 4. services 被引用情况
-grep -rh "git grep -E -h "|from ['\"git grep -E -h "|]@/services/"git grep -E -h "| --include="git grep -E -h "|*.tsx"git grep -E -h "| --include="git grep -E -h "|*.ts"git grep -E -h "| src/ 2>/dev/null | \
-  sed "git grep -E -h "|s/.*from ['\"git grep -E -h "|]@\/services\///g; s/['\"git grep -E -h "|].*//g"git grep -E -h "| | \
+grep -rh "from ['\"]@/services/" --include="*.tsx" --include="*.ts" src/ 2>/dev/null | \
+  sed "s/.*from ['\"]@\/services\///g; s/['\"].*//g" | \
   sort | uniq -c | sort -rn | head -n 30
 
 # 5. router modules 数量
@@ -107,45 +107,45 @@ find src/pages/<module> -maxdepth 1 -type d | sort
 
 # 2. 对比各子模块的 config.ts 中的关键配置（检测步骤数差异）
 git ls-files 'src/pages/<module>/*/config.ts' 2>/dev/null | \
-  xargs -I {} sh -c 'echo "git grep -E -h "|=== {} ==="git grep -E -h "|; cat {}'
+  xargs -I {} sh -c 'echo "=== {} ==="; cat {}'
 
 # 3. 检查动态步骤生成机制
-git grep -E -h "git grep -E -h "|totalStep\|stepsFilter\|steps\["git grep -E -h "| -- 'src/pages/<module>/*/config.ts' 2>/dev/null
+git grep -h "totalStep\|stepsFilter\|steps\[" -- 'src/pages/<module>/*/config.ts' 2>/dev/null
 
 # 4. 检查关键组件是否只在某些子模块中存在
-git grep -E -h "git grep -E -h "|ImgCrop\|ImgRotate\|ImgCorrect\|ImgExtract\|DocExtract"git grep -E -h "| \
+git grep -h "ImgCrop\|ImgRotate\|ImgCorrect\|ImgExtract\|DocExtract" \
   -- 'src/pages/<module>/*/trace.tsx' 2>/dev/null | sort | uniq -c | sort -rn
 
 # 5. 检查枚举或常量定义映射到不同子模块
-git grep -E -h "git grep -E -h "|WaterMarkEnum\|watermarkType"git grep -E -h "| -- 'src/pages/<module>/*.{ts,tsx}' 2>/dev/null | head -n 20
+git grep -h "WaterMarkEnum\|watermarkType" -- 'src/pages/<module>/*.{ts,tsx}' 2>/dev/null | head -n 20
 
 # 6. API 调用差异（不同子模块调用的 services 是否不同）
-git grep -h "git grep -E -h "|from ['\"git grep -E -h "|]@/services/"git grep -E -h "| -- 'src/pages/<module>/*/list.tsx' 2>/dev/null | \
-  sed "git grep -E -h "|s/.*from ['\"git grep -E -h "|]@\/services\///g; s/['\"git grep -E -h "|].*//g"git grep -E -h "| | \
+git grep -h "from ['\"]@/services/" -- 'src/pages/<module>/*/list.tsx' 2>/dev/null | \
+  sed "s/.*from ['\"]@\/services\///g; s/['\"].*//g" | \
   sort | uniq -c | sort -rn
 
 # 7. 路由/跳转逻辑差异
-git grep -E -h "git grep -E -h "|router\.\|navigate\|useNavigate\|history\."git grep -E -h "| \
+git grep -h "router\.\|navigate\|useNavigate\|history\." \
   -- 'src/pages/<module>/*/trace.tsx' 2>/dev/null | sort -u
 
 # 8. 表单处理差异
-git grep -E -h "git grep -E -h "|onFinish\|onSubmit\|handleSubmit"git grep -E -h "| \
+git grep -h "onFinish\|onSubmit\|handleSubmit" \
   -- 'src/pages/<module>/*/trace.tsx' 2>/dev/null | sort -u
 
 # 9. 条件渲染差异
-git grep -E -h "git grep -E -h "|visible\|show\|display\|render"git grep -E -h "| -- 'src/pages/<module>/*/trace.tsx' 2>/dev/null | \
-  grep -E "git grep -E -h "|step|Step"git grep -E -h "| | sort -u
+git grep -h "visible\|show\|display\|render" -- 'src/pages/<module>/*/trace.tsx' 2>/dev/null | \
+  grep -E "step|Step" | sort -u
 
 # 10. 页面间状态传递方式
-git grep -E -h "git grep -E -h "|useState\|useContext\|createContext\|Provider"git grep -E -h "| \
+git grep -h "useState\|useContext\|createContext\|Provider" \
   -- 'src/pages/<module>/*/trace.tsx' 2>/dev/null | sort | uniq -c | sort -rn
 
 # 11. 错误处理逻辑差异
-git grep -E -h "git grep -E -h "|message\.\|notification\|Modal\.error\|onError"git grep -E -h "| \
+git grep -h "message\.\|notification\|Modal\.error\|onError" \
   -- 'src/pages/<module>/*/trace.tsx' 2>/dev/null | sort -u
 
 # 12. 加载状态处理差异
-git grep -E -h "git grep -E -h "|loading\|isLoading\|Loading\|Spin" \
+git grep -h "loading\|isLoading\|Loading\|Spin" \
   -- 'src/pages/<module>/*/trace.tsx' 2>/dev/null | sort -u
 ```
 
