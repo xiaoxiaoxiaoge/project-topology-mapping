@@ -1,5 +1,9 @@
 # 后端项目输出模板
 
+> **说明**：本文件是 **Markdown 写作骨架/参考模板**，含占位符（`<name>`、`<project-name>` 等），供 AI 写作时套用。
+> **不是** Jinja2/Handlebars 等程序化模板引擎格式，不能被工具直接渲染。
+> 使用时将占位符替换为项目真实值，**不要直接复制示例**。
+
 ```markdown
 # 项目拓扑
 
@@ -95,13 +99,13 @@ Controller → Service → Repository → Database
 
 > ⚠️ **重要：命名相似 ≠ 同一服务，必须交叉验证**
 
-| Java @FeignClient name | Java 常量定义 | Go Eureka 注册名 | 是否同一服务 |
-|----------------------|--------------|-----------------|------------|
-| T1SDK-MODULE-DZD-SERVER | GW_ALGORITHM_DZD_SERVICE_NAME | GW-DOCSY-SERVICE | 否 |
-| GW-DOCSY-SERVICE | GW_DOCSY_SERVICE_NAME | GW-DOCSY-SERVICE | 是 |
+| 客户端服务名 | 客户端常量 | 服务端注册名 | 是否同一服务 |
+|------------|----------|------------|------------|
+| <CLIENT-NAME-1> | <CONSTANT-NAME-1> | <SERVER-NAME-1> | <是/否> |
+| <CLIENT-NAME-2> | <CONSTANT-NAME-2> | <SERVER-NAME-2> | <是/否> |
 
 **说明：**
-- 如果 `@FeignClient(name = "X")` 与 Go 服务 `server_name` 完全一致 → 同一服务
-- 如果 `@FeignClient(name = "X")` 与 Go 服务 `server_name` 不同（如 `T1SDK-*` vs `GW-*`）→ **不同服务**
-- 命名相似（如都包含 DZD）**不是**合并依据，必须验证实际注册名
+- 客户端 name 与服务端注册名完全一致 → 同一服务
+- 客户端 name 与服务端注册名不同 → **不同服务**
+- 命名相似**不是**合并依据，必须验证实际注册名
 ```

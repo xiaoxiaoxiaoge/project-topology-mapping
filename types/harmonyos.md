@@ -35,7 +35,7 @@ find entry/src/main/resources -maxdepth 2 -type d | sort 2>/dev/null
 grep -rh "^import " --include="*.ets" entry/src/main/ets/ 2>/dev/null | \
   grep "from ['\"]" | \
   sed "s/.*from ['\"]\.\.?\//\//g; s/['\"]//g" | \
-  sort | uniq -c | sort -rn | head -50
+  sort | uniq -c | sort -rn | head -n 50
 
 # 10. Native 模块依赖检测（lib*.so）
 grep -rh "lib.*\.so" --include="*.ets" entry/src/main/ets/ 2>/dev/null
@@ -52,7 +52,7 @@ grep -rh "DatabaseService" --include="*.ets" entry/src/main/ets/services/ 2>/dev
 grep -rh "PhotoPickerDialog\|RawFileToSandbox\|testNapi" --include="*.ets" entry/src/main/ets/pages/ 2>/dev/null
 ```
 
-## 变异点检测命令
+## 差异点检测命令
 
 ```bash
 # 1. 列出所有页面（识别有多少个同级的页面模块）
