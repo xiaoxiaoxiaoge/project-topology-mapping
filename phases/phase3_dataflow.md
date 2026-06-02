@@ -183,8 +183,9 @@ cat src/main/java/com/example/controller/<Name3>Controller.java 2>/dev/null
 git grep -h "WaterMarkEnum\|watermarkType" -- '*.ts' '*.tsx' 2>/dev/null | head -n 20
 
 # 后端
-git grep -h "import\|@Autowired\|@Inject" -- '*.java' 2>/dev/null | \
-  grep "com\.example\." | sed 's/.*import //g; s/;//g' | \
+# 注意：直接用 `^import.*com\.example` 限定到 import 行（避免 @Autowired/@Inject 行的干扰）
+git grep -E "^import.*com\.example" -- '*.java' 2>/dev/null | \
+  sed 's/^import //g; s/;//g' | \
   sort | uniq -c | sort -rn | head -n 30
 ```
 
